@@ -1,5 +1,5 @@
 // 온보딩 전용 스크립트. 입력을 모아 메인(/)으로 넘긴다.
-const P = { area: 10, yearBand: '2000년대', targetTemp: 22, lastGas: null, gasType: null, savingsGoal: 30000 };
+const P = { area: 10, yearBand: '2000년대', lastGas: null, gasType: null, savingsGoal: 30000 };
 
 function goOb(id) {
     document.querySelectorAll('.ob-panel').forEach(p => p.classList.remove('active'));
@@ -35,14 +35,13 @@ function finishOb() {
     const gasEl = document.getElementById('ob-gas');
     const goalEl = document.getElementById('ob-goal');
     if (areaEl) P.area = parseInt(areaEl.value);
-    if (tgtEl) P.targetTemp = parseFloat(tgtEl.value);
+
     if (gasEl) P.lastGas = gasEl.value ? parseInt(gasEl.value) : null;
     if (goalEl) P.savingsGoal = parseInt(goalEl.value);
 
     const rows = [
         ['평수', P.area + '평'],
         ['건물 연식', P.yearBand],
-        ['선호 온도', P.targetTemp + '°C'],
         ['지난달 가스비', P.lastGas ? P.lastGas.toLocaleString() + '원' : '미입력'],
         ['월 절약 목표', P.savingsGoal.toLocaleString() + '원'],
     ];
