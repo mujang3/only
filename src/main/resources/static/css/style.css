@@ -81,14 +81,14 @@ body {
 .screen.active { display: block; }
 
 /* 홈 화면 — 히어로 고정, 바디만 스크롤 */
-#sc-home.active {
+#sc-app.active {
     display: flex; flex-direction: column;
     height: 100vh; overflow: hidden;
 }
-#sc-home .app-hero { flex-shrink: 0; }
-#sc-home .notif-container { flex-shrink: 0; }
-#sc-home .app-body { flex: 1; overflow-y: auto; }
-#sc-home .bottom-nav { flex-shrink: 0; position: relative; }
+#sc-app .app-hero { flex-shrink: 0; }
+#sc-app .notif-container { flex-shrink: 0; }
+#sc-app .app-body { flex: 1; overflow-y: auto; }
+#sc-app .bottom-nav { flex-shrink: 0; position: relative; }
 
 /* ════════════════
    온보딩
