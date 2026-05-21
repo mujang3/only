@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
+    <title>온리 : ONLY — 작동 점검</title>
+    <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/check.css">
+</head>
+<body>
+<div class="phone">
+    <div class="topbar">
+        <div class="topbar-logo"><em>온도</em>지킴이</div>
+        <div class="topbar-badge">작동 점검 모드</div>
+    </div>
+
+    <div class="ck-body">
+
+        <!-- 헤더 -->
+        <div class="ck-header">
+            <img src="/images/turn.png" width="88" alt="온리 : ONLY">
+            <div class="ck-title">핑거봇 점검 모드</div>
+            <div class="ck-desc">핑거봇이 보일러 버튼을 제대로<br>누르는지 확인해요</div>
+        </div>
+
+        <!-- 점검 1: 온도 상승 -->
+        <div class="ck-card" id="card-up">
+            <div class="ck-card-top">
+                <div class="ck-num" id="num-up">1</div>
+                <div class="ck-card-title">🔆 온도 상승 버튼</div>
+                <div class="ck-badge" id="badge-up"></div>
+            </div>
+
+            <!-- 애니메이션 -->
+            <div class="ck-anim" id="anim-up">
+                <img src="/images/up.png" class="ck-anim-img" alt="온도 상승">
+                <div class="ck-ring up" id="ring-up"></div>
+                <div class="ck-anim-label">핑거봇이 버튼을 누르는 중...</div>
+                <div class="ck-dots">
+                    <span></span><span></span><span></span>
+                </div>
+            </div>
+
+            <!-- 확인 -->
+            <div class="ck-confirm" id="confirm-up" style="display:none;">
+                <div class="ck-q">작동하나요?</div>
+                <div class="ck-btn-row">
+                    <button class="ck-btn ck-ok" onclick="setResult('up', true)">✓ 작동함</button>
+                    <button class="ck-btn ck-fail" onclick="setResult('up', false)">✗ 안 됨</button>
+                </div>
+            </div>
+
+            <!-- 결과 -->
+            <div class="ck-result" id="result-up"></div>
+        </div>
+
+        <!-- 점검 2: 온도 감소 -->
+        <div class="ck-card ck-locked" id="card-down">
+            <div class="ck-card-top">
+                <div class="ck-num" id="num-down">2</div>
+                <div class="ck-card-title">🔅 온도 감소 버튼</div>
+                <div class="ck-badge" id="badge-down"></div>
+            </div>
+
+            <div class="ck-lock-msg" id="lock-down">
+                <span>🔒</span> 1번 점검 완료 후 진행돼요
+            </div>
+
+            <!-- 애니메이션 -->
+            <div class="ck-anim" id="anim-down" style="display:none;">
+                <img src="/images/down.png" class="ck-anim-img" alt="온도 하강">
+                <div class="ck-ring down" id="ring-down"></div>
+                <div class="ck-anim-label">핑거봇이 버튼을 누르는 중...</div>
+                <div class="ck-dots">
+                    <span></span><span></span><span></span>
+                </div>
+            </div>
+
+            <!-- 확인 -->
+            <div class="ck-confirm" id="confirm-down" style="display:none;">
+                <div class="ck-q">작동하나요?</div>
+                <div class="ck-btn-row">
+                    <button class="ck-btn ck-ok" onclick="setResult('down', true)">✓ 작동함</button>
+                    <button class="ck-btn ck-fail" onclick="setResult('down', false)">✗ 안 됨</button>
+                </div>
+            </div>
+
+            <!-- 결과 -->
+            <div class="ck-result" id="result-down"></div>
+        </div>
+
+        <!-- 완료 버튼 -->
+        <div id="ck-finish" style="display:none;">
+            <div class="ck-finish-msg" id="ck-finish-msg"></div>
+            <button class="btn-next" style="width:100%;" onclick="goMain()">메인 화면으로 →</button>
+        </div>
+
+    </div>
+</div>
+<script src="/js/check.js"></script>
+</body>
+</html>

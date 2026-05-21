@@ -1,0 +1,145 @@
+/* ════════════════
+   작동 점검 화면
+════════════════ */
+
+.ck-body { padding: 0 20px 48px; }
+
+/* 헤더 */
+.ck-header {
+    text-align: center;
+    padding: 28px 0 24px;
+}
+.ck-title {
+    font-size: 20px; font-weight: 800;
+    color: var(--text); letter-spacing: -0.02em;
+    margin-top: 14px; margin-bottom: 6px;
+}
+.ck-desc {
+    font-size: 13px; color: var(--text2); line-height: 1.6;
+}
+
+/* 점검 카드 */
+.ck-card {
+    background: var(--surface);
+    border: 1.5px solid var(--border);
+    border-radius: var(--r);
+    padding: 18px;
+    margin-bottom: 14px;
+    transition: border-color 0.4s, background 0.4s;
+}
+.ck-card.running  { border-color: var(--accent); }
+.ck-card.done-ok  { border-color: #86EFAC; background: var(--green-pale); }
+.ck-card.done-fail{ border-color: #FCA5A5; background: #FFF5F5; }
+.ck-locked { opacity: 0.45; }
+
+.ck-card-top {
+    display: flex; align-items: center; gap: 10px;
+    margin-bottom: 16px;
+}
+.ck-num {
+    width: 26px; height: 26px; border-radius: 8px;
+    background: linear-gradient(135deg, #2E76C8, #3B8FE8);
+    color: white; font-size: 12px; font-weight: 800;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+}
+.ck-card-title {
+    font-size: 14px; font-weight: 700; color: var(--text); flex: 1;
+}
+
+/* 배지 */
+.ck-badge {
+    font-size: 11px; font-weight: 700; border-radius: 20px;
+    padding: 3px 10px;
+}
+.ck-badge.ok   { background: var(--green-pale); color: var(--green); border: 1px solid #86EFAC; }
+.ck-badge.fail { background: #FFF5F5; color: #EF4444; border: 1px solid #FCA5A5; }
+
+/* 잠금 메시지 */
+.ck-lock-msg {
+    text-align: center; font-size: 12px; color: var(--text3);
+    padding: 8px 0 4px;
+}
+
+/* 애니메이션 영역 */
+.ck-anim {
+    flex-direction: column; align-items: center;
+    padding: 8px 0 4px;
+    display: flex;
+}
+.ck-anim-img {
+    width: 140px; height: 140px; object-fit: contain;
+    margin-bottom: 12px;
+}
+
+@keyframes spin-cw  { to { transform: rotate(360deg);  } }
+@keyframes spin-ccw { to { transform: rotate(-360deg); } }
+@keyframes dot-pulse {
+    0%, 80%, 100% { opacity: 0.2; transform: scale(0.8); }
+    40%           { opacity: 1;   transform: scale(1.2); }
+}
+
+.ck-ring {
+    width: 36px; height: 36px; border-radius: 50%;
+    border: 3px solid var(--border2);
+    position: relative;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 10px;
+}
+.ck-ring.up {
+    border-top-color: var(--accent);
+    border-right-color: var(--accent2);
+    animation: spin-cw 0.9s linear infinite;
+}
+.ck-ring.down {
+    border-bottom-color: var(--green);
+    border-left-color: #4ADE80;
+    animation: spin-ccw 0.9s linear infinite;
+}
+
+.ck-anim-label {
+    font-size: 13px; font-weight: 600; color: var(--text2);
+    margin-bottom: 10px;
+}
+.ck-dots { display: flex; gap: 6px; }
+.ck-dots span {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: var(--accent); display: block;
+}
+.ck-dots span:nth-child(1) { animation: dot-pulse 1.2s ease-in-out infinite 0s; }
+.ck-dots span:nth-child(2) { animation: dot-pulse 1.2s ease-in-out infinite 0.2s; }
+.ck-dots span:nth-child(3) { animation: dot-pulse 1.2s ease-in-out infinite 0.4s; }
+
+/* 확인 영역 */
+.ck-confirm { padding: 4px 0; }
+.ck-q {
+    font-size: 15px; font-weight: 700; color: var(--text);
+    text-align: center; margin-bottom: 12px;
+}
+.ck-btn-row { display: flex; gap: 10px; }
+.ck-btn {
+    flex: 1; padding: 13px; border: none; border-radius: 14px;
+    font-size: 14px; font-weight: 700; cursor: pointer; font-family: inherit;
+    transition: transform 0.1s, opacity 0.2s;
+}
+.ck-btn:active { transform: scale(0.97); }
+.ck-btn.ck-ok   { background: linear-gradient(135deg, #15803D, #16A34A); color: white; box-shadow: 0 4px 14px rgba(22,163,74,0.3); }
+.ck-btn.ck-fail { background: var(--surface2); color: var(--text2); border: 1.5px solid var(--border2); }
+
+/* 결과 텍스트 */
+.ck-result {
+    font-size: 12px; font-weight: 600;
+    padding: 8px 12px; border-radius: 10px; margin-top: 4px;
+}
+.ck-result.ok   { background: var(--green-pale); color: var(--green); }
+.ck-result.fail { background: #FFF5F5; color: #EF4444; }
+
+/* 완료 영역 */
+#ck-finish { margin-top: 4px; }
+.ck-finish-msg {
+    text-align: center; font-size: 14px; font-weight: 600;
+    padding: 14px 16px; border-radius: 14px; margin-bottom: 14px;
+    line-height: 1.5;
+}
+.ck-finish-msg.ok   { background: var(--green-pale); color: var(--green); border: 1px solid #86EFAC; }
+.ck-finish-msg.warn { background: var(--gold-pale);  color: var(--gold);  border: 1px solid #EDD78A; }

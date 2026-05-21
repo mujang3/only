@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
+    <title>온리 : ONLY — AI 스마트 난방</title>
+    <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/style.css}" href="/css/style.css">
+</head>
+<body>
+<div class="phone">
+    <div class="screen active" id="sc-app">
+        <div class="topbar">
+            <div class="topbar-logo"><em>온리</em> : ONLY</div>
+            <div class="topbar-badge" id="app-badge">내 집</div>
+        </div>
+
+        <!-- 히어로 -->
+        <div class="app-hero" id="app-hero">
+            <div class="hero-top">
+                <div class="hero-status">
+                    <div class="hero-status-dot" id="hero-dot"></div>
+                    <span id="hero-status-txt">대기 중</span>
+                </div>
+                <div class="hero-hum-status" id="hero-hum-status">
+                    <span id="hero-hum-icon">💧</span>
+                    <span id="hero-hum-txt">가습기 미가동</span>
+                </div>
+                <div class="profile-pill" id="hero-pill">온리 : ONLY</div>
+            </div>
+            <div class="hero-char-area">
+                <div class="hero-info">
+                    <div class="hero-label">현재 체감온도</div>
+                    <div class="hero-feels">
+                        <span id="hero-feels">--</span><sup>°C</sup>
+                    </div>
+                    <div class="hero-feels-label">목표 <span id="hero-target">22</span>°C</div>
+                    <div class="hero-msg" id="hero-msg">날씨를 불러오거나<br>슬라이더를 조작해주세요</div>
+                </div>
+                <div class="hero-char" style="text-align:right;padding-bottom:0;">
+                    <div class="char-bubble" id="char-bubble">안녕! 나는 온리 : ONLY</div>
+                    <div id="char-svg-wrap">
+                        <img src="/images/turn.png" alt="온리 : ONLY">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- AI 알림 영역 -->
+        <div id="notif-container" class="notif-container"></div>
+
+        <div class="app-body">
+
+            <!-- 날씨 -->
+            <div class="section-label">외기 날씨</div>
+            <div class="weather-card">
+                <div style="font-size:11px;color:var(--text3);margin-bottom:10px;" id="loc-pill">📍 위치 불러오는 중...</div>
+                <div class="weather-row">
+                    <div class="w-icon" id="w-icon">🌡️</div>
+                    <div>
+                        <div class="w-temp-big" id="w-temp">--<sup>°</sup></div>
+                        <div class="w-meta" id="w-desc">날씨 연결 전</div>
+                    </div>
+                </div>
+                <div class="w-chips">
+                    <div class="wchip"><div class="wl">외기 습도</div><div class="wv" id="w-hum">--%</div></div>
+                    <div class="wchip"><div class="wl">풍속</div><div class="wv" id="w-wind">--</div></div>
+                    <div class="wchip"><div class="wl">체감(외기)</div><div class="wv" id="w-fl">--°C</div></div>
+                </div>
+                <button class="fetch-btn" id="fetchBtn" onclick="fetchWeather()">📡 현재 위치 날씨 가져오기</button>
+                <div class="st-msg" id="st-msg">GPS 권한이 필요합니다</div>
+            </div>
+
+            <!-- 실내 -->
+            <div class="section-label">실내 환경 입력</div>
+            <div class="indoor-card">
+                <div class="isl-wrap">
+                    <div class="isl-top"><span>현재 실내 온도</span><div class="isl-val" id="iTemp-v">15°C</div></div>
+                    <input type="range" id="iTemp" min="5" max="30" value="15" step="0.5" oninput="ss('iTemp','iTemp-v','°C');calc()">
+                </div>
+                <div class="isl-wrap">
+                    <div class="isl-top"><span>실내 습도</span><div class="isl-val" id="iHum-v">40%</div></div>
+                    <input type="range" id="iHum" min="10" max="90" value="40" step="1" oninput="ss('iHum','iHum-v','%');calc()">
+                </div>
+                <div class="isl-wrap">
+                    <div class="isl-top" style="margin-bottom:10px;">
+                        <span>내 쾌적 단계</span>
+                        <div class="isl-val" id="iTgt-v" style="font-size:12px;padding:3px 10px;">3단계 · --°C</div>
+                    </div>
+                    <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:5px;margin-bottom:6px;">
+                        <button class="pref-btn" id="pref1" data-step="1" onclick="setStep(1)">
+                            <div class="pb-icon">🍃🍃</div><div class="pb-label">1단계</div><div class="pb-sub">-2°C</div>
+                        </button>
+                        <button class="pref-btn" id="pref2" data-step="2" onclick="setStep(2)">
+                            <div class="pb-icon">🍃</div><div class="pb-label">2단계</div><div class="pb-sub">-1°C</div>
+                        </button>
+                        <button class="pref-btn active" id="pref3" data-step="3" onclick="setStep(3)">
+                            <div class="pb-icon">😊</div><div class="pb-label">3단계</div><div class="pb-sub">기준</div>
+                        </button>
+                        <button class="pref-btn" id="pref4" data-step="4" onclick="setStep(4)">
+                            <div class="pb-icon">🔥</div><div class="pb-label">4단계</div><div class="pb-sub">+1°C</div>
+                        </button>
+                        <button class="pref-btn" id="pref5" data-step="5" onclick="setStep(5)">
+                            <div class="pb-icon">🔥🔥</div><div class="pb-label">5단계</div><div class="pb-sub">+2°C</div>
+                        </button>
+                    </div>
+                    <div style="font-size:10px;color:var(--text3);text-align:center;">ASHRAE 최적온도 기준 ± 조절</div>
+                </div>
+            </div>
+
+            <!-- 쾌적 척도 카드 -->
+            <div class="section-label">논문 기반 쾌적 척도</div>
+            <div class="comfort-card">
+                <div class="optimal-row">
+                    <div class="optimal-left">
+                        <div class="ol-label">ASHRAE 55 기준 최적온도</div>
+                        <div class="ol-val"><span id="c-optimal">--</span>°C</div>
+                    </div>
+                    <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;">
+                        <div style="font-size:10px;color:var(--text3);">T = 0.31 × T<sub>out</sub> + 17.8</div>
+                        <div style="font-size:9px;color:var(--text3);font-style:italic;">ASHRAE Standard 55-2020</div>
+                        <div style="background:var(--navy-pale);border-radius:20px;padding:3px 10px;font-size:11px;font-weight:700;color:var(--navy);">
+                            내 목표 <span id="c-mytarget">--</span>°C
+                        </div>
+                    </div>
+                </div>
+
+                <div class="scale-wrap">
+                    <div class="scale-bars">
+                        <div class="scale-bar s1" id="sb1"></div>
+                        <div class="scale-bar s2" id="sb2"></div>
+                        <div class="scale-bar s3" id="sb3"></div>
+                        <div class="scale-bar s4" id="sb4"></div>
+                        <div class="scale-bar s5" id="sb5"></div>
+                    </div>
+                    <div class="scale-labels">
+                        <div class="scale-lbl s1" id="sl1">🥶 매우 추움</div>
+                        <div class="scale-lbl s2" id="sl2">😰 추움</div>
+                        <div class="scale-lbl s3" id="sl3">😊 쾌적</div>
+                        <div class="scale-lbl s4" id="sl4">😅 더움</div>
+                        <div class="scale-lbl s5" id="sl5">🥵 매우 더움</div>
+                    </div>
+                </div>
+
+                <div class="comfort-status" id="comfort-status">
+                    <div class="comfort-emoji" id="c-emoji">--</div>
+                    <div class="comfort-info">
+                        <div class="ci-label" id="c-label">분석 중...</div>
+                        <div class="ci-sub" id="c-sub">슬라이더를 조작하거나 날씨를 불러오세요</div>
+                    </div>
+                    <div class="to-comfort-badge" id="c-badge">--</div>
+                </div>
+            </div>
+
+            <!-- AI 알림 (결과 카드 위) -->
+            <div id="notif-inline" class="notif-inline-container"></div>
+
+            <!-- AI 결과 -->
+            <div class="section-label">AI 분석 결과</div>
+            <div class="result-card" id="result-card">
+                <div class="result-header">
+                    <div class="result-dot" id="r-dot"></div>
+                    <div class="result-status" id="r-status">분석 중...</div>
+                    <div class="result-time" id="r-time">--<span>분</span></div>
+                </div>
+                <div class="metrics">
+                    <div class="metric"><div class="ml">체감온도</div><div class="mv" id="r-fl" style="color:var(--navy)">--<span class="mu">°C</span></div></div>
+                    <div class="metric"><div class="ml">목표 차이</div><div class="mv" id="r-gap" style="color:var(--text3)">--<span class="mu">°C</span></div></div>
+                    <div class="metric"><div class="ml">가동 시간</div><div class="mv" id="r-rt" style="color:var(--navy)">--<span class="mu">분</span></div></div>
+                </div>
+                <div class="fb-row">
+                    <div class="fb-led" id="fb-led"></div>
+                    <span class="fb-txt" id="fb-txt">핑거봇 대기 중</span>
+                </div>
+                <div class="save-row">
+                    <div class="schip gold"><div class="scl">절감률</div><div class="scv g" id="s-rate">--%</div></div>
+                    <div class="schip blue"><div class="scl">오늘 절감</div><div class="scv b" id="s-day">--원</div></div>
+                    <div class="schip plain"><div class="scl">월간 예측</div><div class="scv" id="s-mon" style="color:var(--text)">--원</div></div>
+                </div>
+            </div>
+
+            <!-- 알고리즘 -->
+            <div class="section-label" style="margin-top:4px;">작동 원리</div>
+            <div class="algo-card">
+                <div class="algo-steps">
+                    <div class="astep"><div class="astep-num">01</div><div class="astep-txt"><div class="at">체감온도 분석</div><div class="as">온습도 센서 + 날씨 API → 기상청 한파 공식으로 실제 체감온도 산출</div></div></div>
+                    <div class="astep"><div class="astep-num">02</div><div class="astep-txt"><div class="at">ASHRAE 최적온도 산출</div><div class="as">T = 0.31 × T_outdoor + 17.8 — 실외온도 기반 논문 공식으로 목표온도 자동 결정</div></div></div>
+                    <div class="astep"><div class="astep-num">03</div><div class="astep-txt"><div class="at">PMV 5단계 판정</div><div class="as">현재 체감온도 vs 최적온도 비교 → 1(매우 추움)~5(매우 더움) 단계 자동 분류</div></div></div>
+                    <div class="astep"><div class="astep-num">04</div><div class="astep-txt"><div class="at">핑거봇 자동 실행</div><div class="as">1~2단계 판정 시 앱 신호 → 핑거봇 → 보일러 물리 버튼 ON</div></div></div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="bottom-nav">
+            <button class="nav-btn active" id="nav-home" onclick="switchTab('home')"><div class="nav-icon">🏠</div>홈</button>
+            <button class="nav-btn" id="nav-stats" onclick="switchTab('stats')"><div class="nav-icon">📊</div>통계</button>
+            <button class="nav-btn" id="nav-settings" onclick="switchTab('settings')"><div class="nav-icon">⚙️</div>설정</button>
+        </div>
+    </div>
+
+    <!-- ════ 채팅 ════ -->
+    <button class="chat-fab" id="chatFab" onclick="toggleChat()">💬</button>
+
+    <div class="chat-panel" id="chatPanel">
+        <div class="chat-header">
+            <div class="chat-header-left">
+                <div style="font-size:28px;">🤖</div>
+                <div>
+                    <div class="chat-name">온리 : ONLY AI</div>
+                    <div class="chat-status">단계 추천 · 절약 팁</div>
+                </div>
+            </div>
+            <button class="chat-close" onclick="toggleChat()">✕</button>
+        </div>
+        <div class="chat-messages" id="chatMessages">
+            <div class="chat-msg bot">
+                <div class="chat-bubble">안녕하세요! 🏠 난방 단계 추천이나 가스비 절약 팁을 알려드릴게요. 무엇이든 물어보세요!</div>
+            </div>
+            <div class="chat-msg bot">
+                <div class="chat-bubble" style="background:var(--accent-pale);border-color:var(--border);">
+                    💡 이렇게 물어보세요<br>
+                    · "지금 몇 단계가 좋아?"<br>
+                    · "다른 사람들은 어떻게 절약해?"<br>
+                    · "오늘 날씨에 맞는 설정 알려줘"
+                </div>
+            </div>
+        </div>
+        <div class="chat-input-row">
+            <input type="text" class="chat-input" id="chatInput"
+                   placeholder="메시지를 입력하세요..."
+                   onkeydown="if(event.key==='Enter'){event.preventDefault();sendChat();}">
+            <button class="chat-send" id="chatSendBtn" onclick="sendChat()">전송</button>
+        </div>
+    </div>
+
+    <!-- ════ 통계 화면 ════ -->
+    <div class="screen" id="sc-stats">
+        <div class="topbar">
+            <div class="topbar-logo"><em>온리</em> : ONLY</div>
+            <div class="topbar-badge">이번 달 통계</div>
+        </div>
+        <div class="app-body">
+
+            <!-- 절약 목표 달성 카드 -->
+            <div class="section-label">절약 목표 달성 현황</div>
+            <div class="st-card goal-card" id="goal-card">
+                <div class="goal-top-row">
+                    <div>
+                        <div class="goal-card-label">이번 달 절약 목표</div>
+                        <div class="goal-card-target" id="goal-target-txt">목표 미설정</div>
+                    </div>
+                    <div class="goal-pct-badge" id="goal-pct-badge">0%</div>
+                </div>
+                <div class="goal-bar-bg">
+                    <div class="goal-bar-fill" id="goal-bar-fill" style="width:0%"></div>
+                </div>
+                <div class="goal-detail-row">
+                    <div class="goal-detail-item">
+                        <div class="goal-detail-label">현재 절감</div>
+                        <div class="goal-detail-val green" id="goal-saved-val">--원</div>
+                    </div>
+                    <div class="goal-detail-divider"></div>
+                    <div class="goal-detail-item">
+                        <div class="goal-detail-label">남은 목표</div>
+                        <div class="goal-detail-val" id="goal-remain-val">--원</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 요약 카드 -->
+            <div class="section-label">이번 달 절감 현황</div>
+            <div class="st-summary-card">
+                <div class="st-sum-row">
+                    <div class="st-sum-item">
+                        <div class="st-sum-label">총 절감액</div>
+                        <div class="st-sum-val g">₩18,400</div>
+                        <div class="st-sum-sub">지난달 대비 +15%</div>
+                    </div>
+                    <div class="st-sum-divider"></div>
+                    <div class="st-sum-item">
+                        <div class="st-sum-label">난방 가동 시간</div>
+                        <div class="st-sum-val b">29.3h</div>
+                        <div class="st-sum-sub">일평균 0.97h</div>
+                    </div>
+                    <div class="st-sum-divider"></div>
+                    <div class="st-sum-item">
+                        <div class="st-sum-label">쾌적 달성률</div>
+                        <div class="st-sum-val">78%</div>
+                        <div class="st-sum-sub">목표 80%</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 주간 가동 시간 바 차트 -->
+            <div class="section-label">이번 주 난방 가동 시간</div>
+            <div class="st-card">
+                <div class="st-bar-chart">
+                    <div class="st-bar-wrap">
+                        <div class="st-bar-col">
+                            <div class="st-bar-bg"><div class="st-bar" style="height:55%"></div></div>
+                            <div class="st-bar-val">3.2h</div>
+                            <div class="st-bar-day">월</div>
+                        </div>
+                        <div class="st-bar-col">
+                            <div class="st-bar-bg"><div class="st-bar" style="height:42%"></div></div>
+                            <div class="st-bar-val">2.4h</div>
+                            <div class="st-bar-day">화</div>
+                        </div>
+                        <div class="st-bar-col">
+                            <div class="st-bar-bg"><div class="st-bar" style="height:68%"></div></div>
+                            <div class="st-bar-val">4.0h</div>
+                            <div class="st-bar-day">수</div>
+                        </div>
+                        <div class="st-bar-col">
+                            <div class="st-bar-bg"><div class="st-bar" style="height:22%"></div></div>
+                            <div class="st-bar-val">1.3h</div>
+                            <div class="st-bar-day">목</div>
+                        </div>
+                        <div class="st-bar-col">
+                            <div class="st-bar-bg"><div class="st-bar" style="height:48%"></div></div>
+                            <div class="st-bar-val">2.8h</div>
+                            <div class="st-bar-day">금</div>
+                        </div>
+                        <div class="st-bar-col">
+                            <div class="st-bar-bg"><div class="st-bar active" style="height:85%"></div></div>
+                            <div class="st-bar-val">5.0h</div>
+                            <div class="st-bar-day st-today">토</div>
+                        </div>
+                        <div class="st-bar-col">
+                            <div class="st-bar-bg"><div class="st-bar" style="height:10%;opacity:0.3"></div></div>
+                            <div class="st-bar-val" style="color:var(--text3)">--</div>
+                            <div class="st-bar-day">일</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 쾌적 달성률 도넛 -->
+            <div class="section-label">쾌적 달성률</div>
+            <div class="st-card">
+                <div class="st-donut-wrap">
+                    <div class="st-donut">
+                        <svg viewBox="0 0 100 100" width="140" height="140">
+                            <circle cx="50" cy="50" r="38" fill="none" stroke="#DBEAFE" stroke-width="13"/>
+                            <circle cx="50" cy="50" r="38" fill="none" stroke="url(#donut-grad)" stroke-width="13"
+                                    stroke-dasharray="186 239" stroke-linecap="round"
+                                    transform="rotate(-90 50 50)" id="donut-arc"/>
+                            <defs>
+                                <linearGradient id="donut-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+                                    <stop offset="0%" stop-color="#1E88E5"/>
+                                    <stop offset="100%" stop-color="#42A5F5"/>
+                                </linearGradient>
+                            </defs>
+                        </svg>
+                        <div class="st-donut-center">
+                            <div class="st-donut-pct">78%</div>
+                            <div class="st-donut-sub">쾌적</div>
+                        </div>
+                    </div>
+                    <div class="st-donut-legend">
+                        <div class="st-leg-row"><span class="st-leg-dot" style="background:linear-gradient(135deg,#1E88E5,#42A5F5)"></span><span>쾌적 (78%)</span></div>
+                        <div class="st-leg-row"><span class="st-leg-dot" style="background:#93C5FD"></span><span>추움 (14%)</span></div>
+                        <div class="st-leg-row"><span class="st-leg-dot" style="background:#FB923C"></span><span>더움 (8%)</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 월간 가스비 비교 -->
+            <div class="section-label">월간 가스비 비교</div>
+            <div class="st-card">
+                <div class="st-gas-rows">
+                    <div class="st-gas-row">
+                        <div class="st-gas-label">지난달</div>
+                        <div class="st-gas-bar-wrap">
+                            <div class="st-gas-bar" style="width:100%;background:linear-gradient(90deg,#B0C8E8,#90B4D8)"></div>
+                        </div>
+                        <div class="st-gas-amt">₩122,000</div>
+                    </div>
+                    <div class="st-gas-row">
+                        <div class="st-gas-label">이번달</div>
+                        <div class="st-gas-bar-wrap">
+                            <div class="st-gas-bar" style="width:85%;background:linear-gradient(90deg,#1E88E5,#1565C0)"></div>
+                        </div>
+                        <div class="st-gas-amt" style="color:#1565C0;font-weight:800;">₩103,600</div>
+                    </div>
+                </div>
+                <div class="st-gas-save">이번 달 <strong style="color:#15803D">₩18,400</strong> 절감 중이에요 🎉</div>
+            </div>
+
+        </div>
+        <div class="bottom-nav">
+            <button class="nav-btn" id="nav-home2" onclick="switchTab('home')"><div class="nav-icon">🏠</div>홈</button>
+            <button class="nav-btn active" id="nav-stats2" onclick="switchTab('stats')"><div class="nav-icon">📊</div>통계</button>
+            <button class="nav-btn" id="nav-settings2" onclick="switchTab('settings')"><div class="nav-icon">⚙️</div>설정</button>
+        </div>
+    </div>
+
+    <!-- ════ 설정 화면 ════ -->
+    <div class="screen" id="sc-settings">
+        <div class="topbar">
+            <div class="topbar-logo"><em>온리</em> : ONLY</div>
+            <div class="topbar-badge">설정</div>
+        </div>
+        <div class="app-body">
+
+            <!-- 프로필 -->
+            <div class="section-label">내 프로필</div>
+            <div class="sg-card">
+                <div class="sg-row">
+                    <div class="sg-row-left">
+                        <div class="sg-icon">🏠</div>
+                        <div class="sg-info">
+                            <div class="sg-label">주거 유형</div>
+                            <div class="sg-val" id="sg-type">아파트</div>
+                        </div>
+                    </div>
+                    <div class="sg-arrow">›</div>
+                </div>
+                <div class="sg-divider"></div>
+                <div class="sg-row">
+                    <div class="sg-row-left">
+                        <div class="sg-icon">📐</div>
+                        <div class="sg-info">
+                            <div class="sg-label">평수</div>
+                            <div class="sg-val" id="sg-area">10평</div>
+                        </div>
+                    </div>
+                    <div class="sg-arrow">›</div>
+                </div>
+                <div class="sg-divider"></div>
+                <div class="sg-row">
+                    <div class="sg-row-left">
+                        <div class="sg-icon">🏗️</div>
+                        <div class="sg-info">
+                            <div class="sg-label">건물 연식</div>
+                            <div class="sg-val">2000년대</div>
+                        </div>
+                    </div>
+                    <div class="sg-arrow">›</div>
+                </div>
+            </div>
+
+            <!-- 난방 목표 -->
+            <div class="section-label">난방 목표</div>
+            <div class="sg-card">
+                <div class="sg-row">
+                    <div class="sg-row-left">
+                        <div class="sg-icon">🌡️</div>
+                        <div class="sg-info">
+                            <div class="sg-label">선호 체감온도</div>
+                            <div class="sg-val" id="sg-temp">22°C</div>
+                        </div>
+                    </div>
+                    <input type="range" id="sg-temp-sl" min="16" max="28" value="22" step="0.5"
+                           oninput="document.getElementById('sg-temp').textContent=this.value+'°C'"
+                           style="width:90px;margin-right:4px;">
+                </div>
+                <div class="sg-divider"></div>
+                <div class="sg-row">
+                    <div class="sg-row-left">
+                        <div class="sg-icon">⛽</div>
+                        <div class="sg-info">
+                            <div class="sg-label">가스 요금제</div>
+                            <div class="sg-val">도시가스</div>
+                        </div>
+                    </div>
+                    <div class="sg-arrow">›</div>
+                </div>
+                <div class="sg-divider"></div>
+                <div class="sg-row">
+                    <div class="sg-row-left">
+                        <div class="sg-icon">💳</div>
+                        <div class="sg-info">
+                            <div class="sg-label">지난달 가스비</div>
+                            <div class="sg-val" id="sg-gas">미입력</div>
+                        </div>
+                    </div>
+                    <div class="sg-arrow">›</div>
+                </div>
+            </div>
+
+            <!-- 난방 모드 -->
+            <div class="section-label">난방 모드</div>
+            <div class="sg-card">
+                <div class="sg-row">
+                    <div class="sg-row-left">
+                        <div class="sg-icon">🔥</div>
+                        <div class="sg-info">
+                            <div class="sg-label">히팅 모드</div>
+                            <div class="sg-sub">온도 상승 시 따뜻하게 빠르게 가열</div>
+                        </div>
+                    </div>
+                    <label class="sg-toggle">
+                        <input type="checkbox" checked>
+                        <span class="sg-toggle-track"></span>
+                    </label>
+                </div>
+                <div class="sg-divider"></div>
+                <div class="sg-row sg-row-eco">
+                    <div class="sg-row-left">
+                        <div class="sg-icon sg-icon-eco">🌿</div>
+                        <div class="sg-info">
+                            <div class="sg-label-wrap">
+                                <div class="sg-label">에코 모드</div>
+                                <span class="sg-badge eco">절약</span>
+                            </div>
+                            <div class="sg-sub">추울 때 에너지 절약하며 천천히 가열</div>
+                        </div>
+                    </div>
+                    <label class="sg-toggle sg-toggle-eco">
+                        <input type="checkbox">
+                        <span class="sg-toggle-track"></span>
+                    </label>
+                </div>
+                <div class="sg-divider"></div>
+                <div class="sg-row sg-row-blue">
+                    <div class="sg-row-left">
+                        <div class="sg-icon sg-icon-blue">⚡</div>
+                        <div class="sg-info">
+                            <div class="sg-label-wrap">
+                                <div class="sg-label">목표 온도 자동 ON/OFF</div>
+                                <span class="sg-badge blue">추천</span>
+                            </div>
+                            <div class="sg-sub">도달 시 보일러 자동 종료</div>
+                        </div>
+                    </div>
+                    <label class="sg-toggle">
+                        <input type="checkbox" checked>
+                        <span class="sg-toggle-track"></span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- 알림 -->
+            <div class="section-label">알림</div>
+            <div class="sg-card">
+                <div class="sg-row">
+                    <div class="sg-row-left">
+                        <div class="sg-icon">🔔</div>
+                        <div class="sg-info">
+                            <div class="sg-label">난방 시작 알림</div>
+                            <div class="sg-sub">핑거봇 작동 시 알려줘요</div>
+                        </div>
+                    </div>
+                    <label class="sg-toggle">
+                        <input type="checkbox" checked>
+                        <span class="sg-toggle-track"></span>
+                    </label>
+                </div>
+                <div class="sg-divider"></div>
+                <div class="sg-row">
+                    <div class="sg-row-left">
+                        <div class="sg-icon">✅</div>
+                        <div class="sg-info">
+                            <div class="sg-label">목표 온도 도달 알림</div>
+                            <div class="sg-sub">쾌적 온도 도달 시 알려줘요</div>
+                        </div>
+                    </div>
+                    <label class="sg-toggle">
+                        <input type="checkbox" checked>
+                        <span class="sg-toggle-track"></span>
+                    </label>
+                </div>
+                <div class="sg-divider"></div>
+                <div class="sg-row sg-row-eco">
+                    <div class="sg-row-left">
+                        <div class="sg-icon sg-icon-eco">💧</div>
+                        <div class="sg-info">
+                            <div class="sg-label-wrap">
+                                <div class="sg-label">가습기 권장 알림</div>
+                                <span class="sg-badge eco">절감</span>
+                            </div>
+                            <div class="sg-sub">습도 낮을 때 가습 권장 → 가스비 절감 효과</div>
+                        </div>
+                    </div>
+                    <label class="sg-toggle sg-toggle-eco">
+                        <input type="checkbox" checked>
+                        <span class="sg-toggle-track"></span>
+                    </label>
+                </div>
+                <div class="sg-divider"></div>
+                <div class="sg-row">
+                    <div class="sg-row-left">
+                        <div class="sg-icon">💰</div>
+                        <div class="sg-info">
+                            <div class="sg-label">주간 절감 리포트</div>
+                            <div class="sg-sub">매주 절감 현황 요약</div>
+                        </div>
+                    </div>
+                    <label class="sg-toggle">
+                        <input type="checkbox">
+                        <span class="sg-toggle-track"></span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- 핑거봇 -->
+            <div class="section-label">핑거봇 연결</div>
+            <div class="sg-card">
+                <div class="sg-row">
+                    <div class="sg-row-left">
+                        <img src="/images/robot.png" width="36" style="border-radius:10px;margin-right:4px;">
+                        <div class="sg-info">
+                            <div class="sg-label">핑거봇 상태</div>
+                            <div class="sg-val" style="color:var(--green);">● 연결됨</div>
+                        </div>
+                    </div>
+                    <button class="sg-small-btn" onclick="location.href='/check'">재점검</button>
+                </div>
+            </div>
+
+            <!-- 앱 정보 -->
+            <div class="section-label">앱 정보</div>
+            <div class="sg-card">
+                <div class="sg-row">
+                    <div class="sg-row-left">
+                        <div class="sg-icon">📱</div>
+                        <div class="sg-info">
+                            <div class="sg-label">버전</div>
+                            <div class="sg-val">v1.0.0</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="sg-divider"></div>
+                <div class="sg-row">
+                    <div class="sg-row-left">
+                        <div class="sg-icon">🔬</div>
+                        <div class="sg-info">
+                            <div class="sg-label">기반 논문</div>
+                            <div class="sg-sub">ASHRAE Standard 55-2020</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="sg-divider"></div>
+                <div class="sg-row" onclick="location.href='/onboarding'" style="cursor:pointer;">
+                    <div class="sg-row-left">
+                        <div class="sg-icon">🔄</div>
+                        <div class="sg-info">
+                            <div class="sg-label">온보딩 다시 보기</div>
+                        </div>
+                    </div>
+                    <div class="sg-arrow">›</div>
+                </div>
+            </div>
+
+        </div>
+        <div class="bottom-nav">
+            <button class="nav-btn" id="nav-home3" onclick="switchTab('home')"><div class="nav-icon">🏠</div>홈</button>
+            <button class="nav-btn" id="nav-stats3" onclick="switchTab('stats')"><div class="nav-icon">📊</div>통계</button>
+            <button class="nav-btn active" id="nav-settings3" onclick="switchTab('settings')"><div class="nav-icon">⚙️</div>설정</button>
+        </div>
+    </div>
+</div>
+<script th:src="@{/js/app.js}" src="/js/app.js"></script>
+</body>
+</html>

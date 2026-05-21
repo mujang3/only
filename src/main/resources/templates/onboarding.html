@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
+    <title>온리 : ONLY — AI 스마트 난방</title>
+    <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<div class="phone">
+    <div class="screen active" id="sc-ob">
+        <div class="topbar">
+            <div class="topbar-logo"><em>온리</em> : ONLY</div>
+            <div class="topbar-badge">AI 스마트 난방</div>
+        </div>
+        <div class="ob-body">
+
+            <!-- 환영 패널 -->
+            <div class="ob-panel active" id="ob-welcome">
+                <div class="ob-hero" style="margin:0 -20px;">
+                    <div class="ob-hero-txt">AI 난방 매니저</div>
+                    <h1 style="font-size:28px;font-weight:800;color:white;letter-spacing:-0.03em;margin-bottom:4px;"><em style="color:var(--blue);font-style:normal;">온리</em> : ONLY</h1>
+                    <p style="font-size:13px;color:rgba(255,255,255,0.55);margin-bottom:16px;">AI가 판단하고, 핑거봇이 실행해요!</p>
+                    <div style="text-align:center;padding-bottom:0;">
+                        <img src="/images/robot.png" width="140" alt="온리 : ONLY">
+                    </div>
+                </div>
+
+                <div class="feature-cards" style="margin-top:20px;">
+                    <div class="fc">
+                        <div class="fc-icon">🌡️</div>
+                        <div class="fc-txt">
+                            <div class="ft">체감온도 기반 제어</div>
+                            <div class="fs">온도+습도 결합 실제 체감으로 난방 판단</div>
+                        </div>
+                    </div>
+                    <div class="fc">
+                        <div class="fc-icon">🤖</div>
+                        <div class="fc-txt">
+                            <div class="ft">핑거봇 자동 실행</div>
+                            <div class="fs">구형 보일러도 교체 없이 AI가 버튼을 눌러요</div>
+                        </div>
+                    </div>
+                    <div class="fc">
+                        <div class="fc-icon">💰</div>
+                        <div class="fc-txt">
+                            <div class="ft">가스비 15~20% 절감</div>
+                            <div class="fs">과열 구간 차단으로 불필요한 소모 없애요</div>
+                        </div>
+                    </div>
+                </div>
+                <button class="btn-next" style="width:100%;margin-top:8px;" onclick="goOb('ob-step1')">시작하기 →</button>
+                <span class="skip-link" onclick="skipAll()">설정 건너뛰고 바로 시작</span>
+            </div>
+
+            <!-- STEP 1 -->
+            <div class="ob-panel" id="ob-step1">
+                <div class="ob-progress">
+                    <div class="ob-dot active"></div><div class="ob-dot"></div><div class="ob-dot"></div>
+                </div>
+                <div class="ob-step-txt">1 / 3단계 — 주거 환경</div>
+                <div class="ob-char-top">
+                    <img src="/images/robot.png" width="90" alt="온리 : ONLY">
+                    <div style="font-size:13px;font-weight:600;color:var(--navy);margin-top:4px;">평수를 알려주세요!</div>
+                </div>
+                <div class="ob-title"><em>주거 환경</em>을<br>알려주세요</div>
+                <div class="ob-desc">평수와 건물 연식이 난방 효율 계산에<br>직접 반영돼요.</div>
+
+                <div class="sl-wrap">
+                    <div class="sl-top"><span>평수</span><div class="sl-val" id="ob-area-v">10평</div></div>
+                    <input type="range" id="ob-area" min="5" max="50" value="10" step="1" oninput="document.getElementById('ob-area-v').textContent=this.value+'평'">
+                    <div class="sl-hint"><span>5평</span><span>50평+</span></div>
+                </div>
+                <div class="sl-wrap">
+                    <div class="sl-top"><span>건물 연식</span><div class="sl-val" id="ob-year-v">2000년대</div></div>
+                    <input type="range" id="ob-year" min="1" max="4" value="2" step="1" oninput="syncYear(this.value)">
+                    <div class="sl-hint"><span>~90년대</span><span>2020년대~</span></div>
+                </div>
+                <div class="btn-row">
+                    <button class="btn-skip" onclick="goOb('ob-step3')">건너뛰기</button>
+                    <button class="btn-next" onclick="goOb('ob-step3')">다음 →</button>
+                </div>
+            </div>
+
+            <!-- STEP 2 (난방 목표) -->
+            <div class="ob-panel" id="ob-step3">
+                <div class="ob-progress">
+                    <div class="ob-dot done"></div><div class="ob-dot active"></div><div class="ob-dot"></div>
+                </div>
+                <div class="ob-step-txt">2 / 3단계 — 난방 목표</div>
+                <div class="ob-char-top">
+                    <img src="/images/robot.png" width="90" alt="온리 : ONLY">
+                    <div style="font-size:13px;font-weight:600;color:var(--navy);margin-top:4px;">거의 다 됐어요!</div>
+                </div>
+                <div class="ob-title"><em>난방 목표</em>를<br>설정해요</div>
+                <div class="ob-desc">절감액 계산에 실제 가스비가 활용돼요.</div>
+
+                <div class="sl-wrap">
+                    <div class="sl-top"><span>선호 체감온도</span><div class="sl-val" id="ob-tgt-v">22°C</div></div>
+                    <input type="range" id="ob-tgt" min="16" max="28" value="22" step="0.5" oninput="document.getElementById('ob-tgt-v').textContent=this.value+'°C'">
+                    <div class="sl-hint"><span>16°C 절약형</span><span>28°C 따뜻함</span></div>
+                </div>
+                <div style="font-size:12px;color:var(--text2);font-weight:600;margin-bottom:8px;">💳 지난달 가스비 (선택)</div>
+                <div class="ob-input-wrap">
+                    <input type="number" class="ob-input" id="ob-gas" placeholder="0" min="0">
+                    <span class="ob-unit">원</span>
+                </div>
+                <div style="font-size:11px;color:var(--text3);text-align:center;margin-bottom:16px;">입력 시 절감 금액 비교를 보여드려요</div>
+                <div style="font-size:12px;color:var(--text2);font-weight:600;margin-bottom:8px;">⛽ 가스 요금제</div>
+                <div class="opt-grid col2">
+                    <button class="opt-btn" data-g="gas" data-v="도시가스" onclick="selOpt(this)"><div class="oi">🔵</div><div class="ol">도시가스</div><div class="os">일반 원룸·아파트</div></button>
+                    <button class="opt-btn" data-g="gas" data-v="LPG" onclick="selOpt(this)"><div class="oi">🟡</div><div class="ol">LPG</div><div class="os">일부 빌라·농촌</div></button>
+                </div>
+                <div class="btn-row">
+                    <button class="btn-skip" onclick="goOb('ob-step4')">건너뛰기</button>
+                    <button class="btn-next" onclick="goOb('ob-step4')">다음 →</button>
+                </div>
+            </div>
+
+            <!-- STEP 3 (절약 목표) -->
+            <div class="ob-panel" id="ob-step4">
+                <div class="ob-progress">
+                    <div class="ob-dot done"></div><div class="ob-dot done"></div><div class="ob-dot active"></div>
+                </div>
+                <div class="ob-step-txt">3 / 3단계 — 절약 목표</div>
+                <div class="ob-char-top">
+                    <img src="/images/robot.png" width="90" alt="온리 : ONLY">
+                    <div style="font-size:13px;font-weight:600;color:var(--navy);margin-top:4px;">마지막이에요!</div>
+                </div>
+                <div class="ob-title"><em>절약 목표</em>를<br>설정해요</div>
+                <div class="ob-desc">월 절약 목표를 설정하면<br>달성률을 실시간으로 보여드려요.</div>
+
+                <div class="sl-wrap">
+                    <div class="sl-top"><span>월 절약 목표 금액</span><div class="sl-val" id="ob-goal-v">30,000원</div></div>
+                    <input type="range" id="ob-goal" min="10000" max="100000" value="30000" step="5000" oninput="syncGoal(this.value)">
+                    <div class="sl-hint"><span>1만원</span><span>10만원</span></div>
+                </div>
+
+                <div class="btn-row">
+                    <button class="btn-skip" onclick="finishOb()">건너뛰기</button>
+                    <button class="btn-next green" onclick="finishOb()">완료 ✓</button>
+                </div>
+            </div>
+
+            <!-- 완료 -->
+            <div class="ob-panel" id="ob-done">
+                <div class="ob-done">
+                    <img src="/images/v.png" width="110" alt="온리 : ONLY" style="margin-bottom:8px;">
+                    <h2 style="font-size:22px;font-weight:800;margin-bottom:6px;">설정 완료! 🎉</h2>
+                    <p style="font-size:13px;color:var(--text2);line-height:1.6;margin-bottom:0;">온리 : ONLY가 내 집 맞춤으로<br>준비됐어요.</p>
+                    <div class="profile-box" id="profile-box"></div>
+                    <button class="btn-next" style="width:100%;" onclick="goToApp()">온리 : ONLY 시작하기 →</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ══════════ 메인 앱 ══════════ -->
+</div>
+<script src="/js/onboarding.js"></script>
+</body>
+</html>
