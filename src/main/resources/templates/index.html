@@ -199,40 +199,6 @@
         </div>
     </div>
 
-    <!-- ════ 채팅 ════ -->
-    <button class="chat-fab" id="chatFab" onclick="toggleChat()">💬</button>
-
-    <div class="chat-panel" id="chatPanel">
-        <div class="chat-header">
-            <div class="chat-header-left">
-                <div style="font-size:28px;">🤖</div>
-                <div>
-                    <div class="chat-name">온리 : ONLY AI</div>
-                    <div class="chat-status">단계 추천 · 절약 팁</div>
-                </div>
-            </div>
-            <button class="chat-close" onclick="toggleChat()">✕</button>
-        </div>
-        <div class="chat-messages" id="chatMessages">
-            <div class="chat-msg bot">
-                <div class="chat-bubble">안녕하세요! 🏠 난방 단계 추천이나 가스비 절약 팁을 알려드릴게요. 무엇이든 물어보세요!</div>
-            </div>
-            <div class="chat-msg bot">
-                <div class="chat-bubble" style="background:var(--accent-pale);border-color:var(--border);">
-                    💡 이렇게 물어보세요<br>
-                    · "지금 몇 단계가 좋아?"<br>
-                    · "다른 사람들은 어떻게 절약해?"<br>
-                    · "오늘 날씨에 맞는 설정 알려줘"
-                </div>
-            </div>
-        </div>
-        <div class="chat-input-row">
-            <input type="text" class="chat-input" id="chatInput"
-                   placeholder="메시지를 입력하세요..."
-                   onkeydown="if(event.key==='Enter'){event.preventDefault();sendChat();}">
-            <button class="chat-send" id="chatSendBtn" onclick="sendChat()">전송</button>
-        </div>
-    </div>
 
     <!-- ════ 통계 화면 ════ -->
     <div class="screen" id="sc-stats">
