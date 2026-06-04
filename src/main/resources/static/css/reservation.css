@@ -1,0 +1,277 @@
+/* ════════════════
+   예약 난방 페이지
+════════════════ */
+
+.rv-back {
+    color: white;
+    text-decoration: none;
+    font-size: 20px;
+    font-weight: 700;
+    width: 40px;
+    display: flex;
+    align-items: center;
+}
+
+.rv-body {
+    padding: 16px;
+    padding-bottom: 60px;
+    overflow-y: auto;
+}
+
+/* 카드 */
+.rv-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--r);
+    padding: 16px;
+    margin-bottom: 12px;
+    box-shadow: 0 2px 12px rgba(59,143,232,0.07);
+}
+
+.rv-section {
+    margin-bottom: 16px;
+}
+
+.rv-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text2);
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.rv-opt {
+    font-size: 10px;
+    background: var(--surface2);
+    color: var(--text3);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 1px 6px;
+    font-weight: 500;
+}
+
+/* 시간 입력 */
+.rv-time-input {
+    width: 100%;
+    border: 2px solid var(--border);
+    border-radius: 14px;
+    padding: 14px 16px;
+    font-size: 32px;
+    font-weight: 800;
+    color: var(--accent);
+    font-family: inherit;
+    outline: none;
+    background: var(--accent-pale);
+    text-align: center;
+    transition: border-color 0.2s;
+    letter-spacing: 0.05em;
+}
+.rv-time-input:focus { border-color: var(--accent); }
+
+/* 텍스트 입력 */
+.rv-text-input {
+    width: 100%;
+    border: 1.5px solid var(--border);
+    border-radius: 14px;
+    padding: 12px 16px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text);
+    font-family: inherit;
+    outline: none;
+    background: var(--surface);
+    transition: border-color 0.2s;
+}
+.rv-text-input:focus { border-color: var(--accent); }
+.rv-text-input::placeholder { color: var(--text3); font-weight: 400; }
+
+/* 선호 단계 버튼 */
+.rv-pref-row { display: flex; gap: 6px; }
+.rv-pref {
+    flex: 1;
+    border: 1.5px solid var(--border);
+    border-radius: 12px;
+    padding: 9px 4px;
+    background: var(--surface);
+    cursor: pointer;
+    text-align: center;
+    font-family: inherit;
+    transition: all 0.18s;
+    line-height: 1.4;
+}
+.rv-pref span { display: block; font-size: 15px; font-weight: 800; color: var(--text); }
+.rv-pref small { display: block; font-size: 9px; color: var(--text3); margin-top: 1px; }
+.rv-pref .rv-pf-icon { font-size: 14px; margin-bottom: 2px; }
+.rv-pref.active { border-color: var(--accent); background: var(--accent-pale); }
+.rv-pref.active span { color: var(--accent); }
+.rv-pref.active small { color: var(--blue-dark); font-weight: 600; }
+.rv-pref:active { transform: scale(0.94); }
+
+/* 계산 결과 프리뷰 */
+.rv-preview {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: var(--rs);
+    padding: 14px;
+    margin: 14px 0 0;
+    min-height: 68px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.3s;
+}
+.rv-preview-loading { color: var(--text3); font-size: 13px; }
+.rv-preview-err { color: var(--warm); font-size: 13px; }
+
+.rv-preview-box { width: 100%; }
+
+.rv-prev-row {
+    display: flex; align-items: center; gap: 8px;
+    margin-bottom: 10px;
+}
+.rv-prev-item { flex: 1; text-align: center; }
+.rv-prev-label { font-size: 10px; color: var(--text3); margin-bottom: 3px; }
+.rv-prev-val { font-size: 22px; font-weight: 800; color: var(--text); }
+.rv-prev-arrow { font-size: 18px; color: var(--text3); flex-shrink: 0; }
+
+.rv-prev-result {
+    background: var(--accent-pale);
+    border: 1px solid rgba(59,143,232,0.2);
+    border-radius: var(--rs);
+    padding: 10px 14px;
+    margin-bottom: 8px;
+}
+.rv-prev-clock {
+    font-size: 15px; font-weight: 800; color: var(--accent);
+    margin-bottom: 4px;
+}
+.rv-prev-clock strong { color: var(--blue-dark); }
+.rv-prev-sub { font-size: 11px; color: var(--text2); line-height: 1.4; }
+
+.rv-prev-state { display: flex; gap: 6px; flex-wrap: wrap; }
+.rv-state-pill, .rv-save-pill {
+    font-size: 11px; font-weight: 600;
+    border-radius: 20px; padding: 3px 10px;
+}
+.rv-state-pill { background: var(--warm-pale); color: var(--warm); }
+.rv-state-pill.green { background: var(--green-pale); color: var(--green); }
+.rv-state-pill.blue { background: var(--accent-pale); color: var(--accent); }
+.rv-save-pill { background: var(--green-pale); color: var(--green); }
+
+/* 통계 그리드 */
+.rv-stats-grid {
+    display: flex; align-items: center;
+}
+.rv-stat-item { flex: 1; text-align: center; padding: 10px 6px; }
+.rv-stat-divider { width: 1px; height: 44px; background: var(--border); flex-shrink: 0; }
+.rv-stat-icon { font-size: 22px; margin-bottom: 4px; }
+.rv-stat-val { font-size: 17px; font-weight: 800; color: var(--accent); margin-bottom: 3px; }
+.rv-stat-label { font-size: 10px; color: var(--text3); }
+
+/* 마지막 보일러 상태 */
+.rv-last-state {
+    display: flex; align-items: center; gap: 8px;
+    padding: 10px 12px;
+    background: var(--surface2);
+    border-radius: var(--rs);
+    border: 1px solid var(--border);
+    margin-top: 12px;
+    font-size: 12px; font-weight: 600; color: var(--text);
+}
+.rv-state-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.rv-last-time { margin-left: auto; font-size: 10px; color: var(--text3); font-weight: 400; }
+
+/* 섹션 헤더 */
+.rv-list-header { margin-bottom: 6px; }
+
+/* 빈 상태 */
+.rv-empty {
+    text-align: center;
+    padding: 32px 20px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--r);
+    margin-bottom: 12px;
+}
+.rv-empty-icon { font-size: 36px; margin-bottom: 12px; }
+.rv-empty-msg { font-size: 13px; color: var(--text3); line-height: 1.7; }
+
+/* 예약 아이템 */
+.rv-item {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--r);
+    padding: 14px;
+    margin-bottom: 10px;
+    box-shadow: 0 2px 10px rgba(59,143,232,0.06);
+    animation: notif-in 0.22s ease;
+}
+.rv-item-top {
+    display: flex; align-items: center; gap: 10px;
+    margin-bottom: 12px;
+}
+.rv-item-icon { font-size: 22px; flex-shrink: 0; }
+.rv-item-info { flex: 1; }
+.rv-item-title { font-size: 14px; font-weight: 700; color: var(--text); }
+.rv-item-sub { font-size: 11px; color: var(--text3); margin-top: 2px; }
+.rv-delete-btn {
+    background: #FFF1EC; color: var(--warm);
+    border: 1px solid #FED7AA;
+    border-radius: 10px;
+    padding: 5px 12px;
+    font-size: 11px; font-weight: 600;
+    cursor: pointer; font-family: inherit;
+    transition: opacity 0.15s;
+}
+.rv-delete-btn:active { opacity: 0.7; }
+
+/* 시간 칩 */
+.rv-item-times {
+    display: flex; align-items: center; gap: 8px;
+    margin-bottom: 10px;
+}
+.rv-time-chip {
+    flex: 1; border-radius: var(--rs);
+    padding: 10px 12px; text-align: center;
+    border: 1px solid var(--border);
+}
+.rv-time-chip.start { background: #FFF1EC; border-color: #FED7AA; }
+.rv-time-chip.arrive { background: var(--green-pale); border-color: #86EFAC; }
+.rv-tc-label { font-size: 10px; color: var(--text3); margin-bottom: 3px; }
+.rv-tc-val { font-size: 22px; font-weight: 800; color: var(--text); }
+.rv-time-chip.start .rv-tc-val { color: var(--warm); }
+.rv-time-chip.arrive .rv-tc-val { color: var(--green); }
+.rv-time-arrow { font-size: 20px; color: var(--text3); flex-shrink: 0; }
+
+.rv-item-footer {
+    font-size: 11px; color: var(--text3);
+    background: var(--surface2);
+    border-radius: var(--rs);
+    padding: 7px 12px;
+    border: 1px solid var(--border);
+}
+
+/* 히스토리 */
+.rv-history-list {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--r);
+    margin-bottom: 12px;
+    overflow: hidden;
+}
+.rv-hist-item {
+    display: flex; align-items: center; gap: 10px;
+    padding: 11px 14px;
+    border-bottom: 1px solid var(--border);
+}
+.rv-hist-item:last-child { border-bottom: none; }
+.rv-hist-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.rv-hist-info { flex: 1; min-width: 0; }
+.rv-hist-main {
+    font-size: 12px; font-weight: 600; color: var(--text);
+    margin-bottom: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.rv-hist-sub { font-size: 10px; color: var(--text3); }
+.rv-hist-save { font-size: 12px; font-weight: 700; color: var(--green); flex-shrink: 0; }

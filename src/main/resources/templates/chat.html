@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>AI 설정 도우미 — ONLY</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/chat.css">
+</head>
+<body>
+<div class="phone">
+
+    <div class="topbar">
+        <a href="/main" class="rv-back">&#8592;</a>
+        <div class="topbar-logo">ON<em>LY</em> <span class="topbar-badge">AI 설정 도우미</span></div>
+        <div style="width:40px"></div>
+    </div>
+
+    <div class="chat-body" id="chat-body">
+        <!-- 메시지가 여기에 동적으로 추가됩니다 -->
+    </div>
+
+    <div class="chat-apply-wrap" id="apply-wrap" style="display:none">
+        <button class="chat-apply-btn" onclick="applySettings()">
+            설정 적용하고 시작하기 →
+        </button>
+    </div>
+
+    <div class="chat-input-area">
+        <input type="text" id="chat-input" class="chat-input"
+               placeholder="메시지를 입력하세요..."
+               onkeydown="if(event.key==='Enter')sendMessage()"
+               disabled>
+        <button class="chat-send-btn" id="send-btn" onclick="sendMessage()" disabled>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                <path d="M22 2L11 13" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M22 2L15 22L11 13L2 9L22 2Z" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        </button>
+    </div>
+
+</div>
+<script src="/js/chat.js"></script>
+</body>
+</html>

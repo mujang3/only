@@ -432,6 +432,22 @@ window.addEventListener('DOMContentLoaded', () => {
     const q = new URLSearchParams(window.location.search);
     if (q.get('area')) window.__AREA__ = parseInt(q.get('area'));
     if (q.get('savingsGoal')) savingsGoal = parseInt(q.get('savingsGoal'));
+
+    // AI 채팅 도우미가 설정한 값 적용
+    const saved = localStorage.getItem('only_settings');
+    if (saved) {
+        try {
+            const s = JSON.parse(saved);
+            const tempEl = document.getElementById('iTemp');
+            const humEl  = document.getElementById('iHum');
+            if (tempEl && s.indoorTemp) { tempEl.value = s.indoorTemp; ss('iTemp', 'iTemp-v', '°C'); }
+            if (humEl  && s.indoorHum)  { humEl.value  = s.indoorHum;  ss('iHum',  'iHum-v',  '%');  }
+            if (s.prefStep) setStep(s.prefStep);
+            if (s.area)     window.__AREA__ = s.area;
+        } catch (e) { /* ignore */ }
+        localStorage.removeItem('only_settings');
+    }
+
     sInsul();
     setCharImg('/images/turn.png');
     calc();

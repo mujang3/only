@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>예약 난방 — ONLY</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/reservation.css">
+</head>
+<body>
+<div class="phone">
+
+    <!-- 상단바 -->
+    <div class="topbar">
+        <a href="/main" class="rv-back">&#8592;</a>
+        <div class="topbar-logo">ON<em>LY</em> <span class="topbar-badge">예약 난방</span></div>
+        <div style="width:40px"></div>
+    </div>
+
+    <div class="rv-body">
+
+        <!-- ── 예약 설정 카드 ── -->
+        <div class="rv-card">
+            <div class="section-label">귀가 예약 설정</div>
+
+            <!-- 귀가 시간 -->
+            <div class="rv-section">
+                <div class="rv-label">귀가 시간</div>
+                <input type="time" id="rv-arrival" class="rv-time-input" value="18:30">
+            </div>
+
+            <!-- 현재 실내 온도 -->
+            <div class="rv-section">
+                <div class="sl-top">
+                    <span class="rv-label">현재 실내 온도</span>
+                    <span class="sl-val" id="rv-temp-v">18°C</span>
+                </div>
+                <input type="range" id="rv-temp" min="10" max="30" step="0.5" value="18"
+                       oninput="onSlider()">
+                <div class="sl-hint"><span>10°C</span><span>30°C</span></div>
+            </div>
+
+            <!-- 외기온 -->
+            <div class="rv-section">
+                <div class="sl-top">
+                    <span class="rv-label">외기 온도 <span class="rv-opt">선택</span></span>
+                    <span class="sl-val" id="rv-out-v">-2°C</span>
+                </div>
+                <input type="range" id="rv-out" min="-15" max="20" step="1" value="-2"
+                       oninput="onSlider()">
+                <div class="sl-hint"><span>-15°C</span><span>20°C</span></div>
+            </div>
+
+            <!-- 선호 단계 -->
+            <div class="rv-section">
+                <div class="rv-label">선호 온도 단계</div>
+                <div class="rv-pref-row">
+                    <button class="rv-pref" id="rvp1" onclick="setRvPref(1)">
+                        <span class="rv-pf-icon">❄️</span><span>1</span><small>절약형</small>
+                    </button>
+                    <button class="rv-pref" id="rvp2" onclick="setRvPref(2)">
+                        <span class="rv-pf-icon">🌿</span><span>2</span><small>-1°C</small>
+                    </button>
+                    <button class="rv-pref active" id="rvp3" onclick="setRvPref(3)">
+                        <span class="rv-pf-icon">✨</span><span>3</span><small>표준</small>
+                    </button>
+                    <button class="rv-pref" id="rvp4" onclick="setRvPref(4)">
+                        <span class="rv-pf-icon">☀️</span><span>4</span><small>+1°C</small>
+                    </button>
+                    <button class="rv-pref" id="rvp5" onclick="setRvPref(5)">
+                        <span class="rv-pf-icon">🔥</span><span>5</span><small>따뜻</small>
+                    </button>
+                </div>
+            </div>
+
+            <!-- 예약 이름 -->
+            <div class="rv-section">
+                <div class="rv-label">예약 이름</div>
+                <input type="text" id="rv-label-input" class="rv-text-input"
+                       placeholder="귀가 예약" maxlength="20">
+            </div>
+
+            <!-- 계산 결과 프리뷰 -->
+            <div class="rv-preview" id="rv-preview">
+                <div class="rv-preview-loading">⏳ 계산 중...</div>
+            </div>
+
+            <button class="btn-next" id="rv-add-btn" onclick="addReservation()"
+                    style="margin-top:14px;">
+                예약 추가하기
+            </button>
+        </div>
+
+        <!-- ── 오늘 통계 카드 ── -->
+        <div class="rv-card">
+            <div class="section-label">오늘의 난방 기록</div>
+            <div class="rv-stats-grid">
+                <div class="rv-stat-item">
+                    <div class="rv-stat-icon">⏱️</div>
+                    <div class="rv-stat-val" id="stat-runtime">—</div>
+                    <div class="rv-stat-label">총 가동시간</div>
+                </div>
+                <div class="rv-stat-divider"></div>
+                <div class="rv-stat-item">
+                    <div class="rv-stat-icon">💰</div>
+                    <div class="rv-stat-val" id="stat-save">—</div>
+                    <div class="rv-stat-label">오늘 절감액</div>
+                </div>
+                <div class="rv-stat-divider"></div>
+                <div class="rv-stat-item">
+                    <div class="rv-stat-icon">📊</div>
+                    <div class="rv-stat-val" id="stat-logs">—</div>
+                    <div class="rv-stat-label">계산 횟수</div>
+                </div>
+            </div>
+            <div class="rv-last-state" id="rv-last-state" style="display:none">
+                <span id="rv-last-dot" class="rv-state-dot"></span>
+                <span id="rv-last-label">—</span>
+                <span class="rv-last-time" id="rv-last-time">—</span>
+            </div>
+        </div>
+
+        <!-- ── 예약 목록 ── -->
+        <div class="rv-list-header">
+            <div class="section-label">예약 목록</div>
+        </div>
+        <div id="rv-list"></div>
+
+        <!-- ── 최근 계산 이력 ── -->
+        <div class="rv-list-header" style="margin-top:4px;">
+            <div class="section-label">최근 계산 이력</div>
+        </div>
+        <div id="rv-history"></div>
+
+    </div>
+</div>
+<script src="/js/reservation.js"></script>
+</body>
+</html>
