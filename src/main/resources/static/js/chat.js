@@ -89,7 +89,20 @@ function applySettings() {
     location.href = '/main';
 }
 
-window.addEventListener('DOMContentLoaded', () => {
+function startChat(topic) {
+    const picker = document.getElementById('concern-picker');
+    const body = document.getElementById('chat-body');
+    const inputArea = document.getElementById('chat-input-area');
+    if (picker) picker.style.display = 'none';
+    if (body) body.style.display = 'flex';
+    if (inputArea) inputArea.style.display = 'flex';
     setInputEnabled(false);
-    callAPI('__START__', false);
+    callAPI('__START__:' + topic, false);
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+    const topic = new URLSearchParams(location.search).get('topic');
+    if (topic) {
+        startChat(topic);
+    }
 });

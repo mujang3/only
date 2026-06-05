@@ -196,6 +196,7 @@
             <button class="nav-btn active" id="nav-home" onclick="switchTab('home')"><div class="nav-icon">🏠</div>홈</button>
             <button class="nav-btn" id="nav-stats" onclick="switchTab('stats')"><div class="nav-icon">📊</div>통계</button>
             <button class="nav-btn" id="nav-settings" onclick="switchTab('settings')"><div class="nav-icon">⚙️</div>설정</button>
+            <button class="nav-btn" id="nav-ai" onclick="switchTab('ai')"><div class="nav-icon">🤖</div>AI 상담</button>
         </div>
     </div>
 
@@ -359,6 +360,7 @@
             <button class="nav-btn" id="nav-home2" onclick="switchTab('home')"><div class="nav-icon">🏠</div>홈</button>
             <button class="nav-btn active" id="nav-stats2" onclick="switchTab('stats')"><div class="nav-icon">📊</div>통계</button>
             <button class="nav-btn" id="nav-settings2" onclick="switchTab('settings')"><div class="nav-icon">⚙️</div>설정</button>
+            <button class="nav-btn" id="nav-ai2" onclick="switchTab('ai')"><div class="nav-icon">🤖</div>AI 상담</button>
         </div>
     </div>
 
@@ -630,9 +632,87 @@
             <button class="nav-btn" id="nav-home3" onclick="switchTab('home')"><div class="nav-icon">🏠</div>홈</button>
             <button class="nav-btn" id="nav-stats3" onclick="switchTab('stats')"><div class="nav-icon">📊</div>통계</button>
             <button class="nav-btn active" id="nav-settings3" onclick="switchTab('settings')"><div class="nav-icon">⚙️</div>설정</button>
+            <button class="nav-btn" id="nav-ai3" onclick="switchTab('ai')"><div class="nav-icon">🤖</div>AI 상담</button>
+        </div>
+    </div>
+
+    <!-- ════ AI 상담 화면 ════ -->
+    <div class="screen" id="sc-ai">
+        <div class="topbar">
+            <div class="topbar-logo"><em>온리</em> : ONLY</div>
+            <div class="topbar-badge">AI 상담</div>
+        </div>
+        <div class="app-body">
+
+            <div class="ai-tab-hero">
+                <img src="/images/robot.png" width="80" alt="온리">
+                <div class="ai-tab-title">AI 난방 상담사</div>
+                <div class="ai-tab-desc">고민을 말씀해 주세요<br>맞춤 해결책을 찾아드려요</div>
+            </div>
+
+            <div class="section-label">어떤 고민이 있으세요?</div>
+            <div class="ai-concern-list">
+                <a class="ai-concern-item" href="/chat?topic=savings">
+                    <span class="aci-icon">💸</span>
+                    <div class="aci-txt">
+                        <div class="aci-title">가스비가 너무 많이 나와요</div>
+                        <div class="aci-sub">절약 패턴 분석 + 맞춤 설정</div>
+                    </div>
+                    <span class="aci-arrow">›</span>
+                </a>
+                <a class="ai-concern-item" href="/chat?topic=cold">
+                    <span class="aci-icon">🥶</span>
+                    <div class="aci-txt">
+                        <div class="aci-title">집이 자꾸 추워요</div>
+                        <div class="aci-sub">원인 분석 + 최적 온도 설정</div>
+                    </div>
+                    <span class="aci-arrow">›</span>
+                </a>
+                <a class="ai-concern-item" href="/chat?topic=auto">
+                    <span class="aci-icon">⏰</span>
+                    <div class="aci-txt">
+                        <div class="aci-title">자동화 설정하고 싶어요</div>
+                        <div class="aci-sub">외출·귀가 스마트 자동 제어</div>
+                    </div>
+                    <span class="aci-arrow">›</span>
+                </a>
+                <a class="ai-concern-item" href="/chat?topic=boiler">
+                    <span class="aci-icon">🔧</span>
+                    <div class="aci-txt">
+                        <div class="aci-title">보일러가 이상하게 작동해요</div>
+                        <div class="aci-sub">증상 진단 + 설정 교정</div>
+                    </div>
+                    <span class="aci-arrow">›</span>
+                </a>
+                <a class="ai-concern-item" href="/chat?topic=general">
+                    <span class="aci-icon">💬</span>
+                    <div class="aci-txt">
+                        <div class="aci-title">그냥 대화로 설정하기</div>
+                        <div class="aci-sub">처음부터 차근차근</div>
+                    </div>
+                    <span class="aci-arrow">›</span>
+                </a>
+            </div>
+
+            <div class="section-label" style="margin-top:8px;">AI 절약 팁</div>
+            <div class="ai-tips-card">
+                <div class="ai-tip">💡 실내 습도를 50%로 맞추면 체감온도가 1~2°C 올라가 가스비를 절약할 수 있어요</div>
+                <div class="ai-tip-divider"></div>
+                <div class="ai-tip">🌙 수면 중 체감 18~19°C가 숙면에 좋아요. 취침 전 목표 온도를 낮춰보세요</div>
+                <div class="ai-tip-divider"></div>
+                <div class="ai-tip">⚡ 잔열 브레이크 기능으로 목표 온도 도달 직전 보일러를 끄면 에너지를 아낄 수 있어요</div>
+            </div>
+
+        </div>
+        <div class="bottom-nav">
+            <button class="nav-btn" id="nav-home4" onclick="switchTab('home')"><div class="nav-icon">🏠</div>홈</button>
+            <button class="nav-btn" id="nav-stats4" onclick="switchTab('stats')"><div class="nav-icon">📊</div>통계</button>
+            <button class="nav-btn" id="nav-settings4" onclick="switchTab('settings')"><div class="nav-icon">⚙️</div>설정</button>
+            <button class="nav-btn active" id="nav-ai4" onclick="switchTab('ai')"><div class="nav-icon">🤖</div>AI 상담</button>
         </div>
     </div>
 </div>
+
 <script th:src="@{/js/app.js}" src="/js/app.js"></script>
 </body>
 </html>

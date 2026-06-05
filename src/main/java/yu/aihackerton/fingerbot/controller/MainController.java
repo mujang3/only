@@ -48,6 +48,11 @@ public class MainController {
         return "chat";
     }
 
+    @GetMapping("/presentation")
+    public String presentation() {
+        return "presentation";
+    }
+
     @PostMapping("/api/calc")
     @ResponseBody
     public HeatingResultDto calc(@RequestBody CalcRequestDto req) {

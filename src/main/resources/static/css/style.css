@@ -577,6 +577,104 @@ input[type=range]::-webkit-slider-thumb {
 .nav-icon { font-size: 20px; }
 
 /* ════════════════
+   AI 상담 탭
+════════════════ */
+.ai-tab-hero {
+    text-align: center;
+    padding: 28px 20px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.ai-tab-title {
+    font-size: 20px;
+    font-weight: 800;
+    color: var(--text);
+    letter-spacing: -0.03em;
+}
+
+.ai-tab-desc {
+    font-size: 13px;
+    color: var(--text2);
+    line-height: 1.6;
+}
+
+.ai-concern-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 4px;
+}
+
+.ai-concern-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    background: var(--surface);
+    border: 1.5px solid var(--border);
+    border-radius: 16px;
+    padding: 14px 16px;
+    text-decoration: none;
+    transition: border-color 0.15s, box-shadow 0.15s, transform 0.1s;
+}
+
+.ai-concern-item:hover, .ai-concern-item:active {
+    border-color: var(--accent);
+    box-shadow: 0 2px 12px rgba(59,143,232,0.15);
+    transform: translateY(-1px);
+}
+
+.aci-icon {
+    font-size: 26px;
+    flex-shrink: 0;
+    width: 36px;
+    text-align: center;
+}
+
+.aci-txt { flex: 1; }
+
+.aci-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 2px;
+}
+
+.aci-sub {
+    font-size: 11px;
+    color: var(--text3);
+}
+
+.aci-arrow {
+    font-size: 20px;
+    color: var(--text3);
+    flex-shrink: 0;
+}
+
+.ai-tips-card {
+    background: var(--surface);
+    border: 1.5px solid var(--border);
+    border-radius: var(--r);
+    padding: 14px 16px;
+    margin-bottom: 12px;
+}
+
+.ai-tip {
+    font-size: 13px;
+    color: var(--text2);
+    line-height: 1.6;
+    padding: 6px 0;
+}
+
+.ai-tip-divider {
+    height: 1px;
+    background: var(--border);
+    margin: 2px 0;
+}
+
+/* ════════════════
    통계 화면
 ════════════════ */
 .st-summary-card {
@@ -831,5 +929,53 @@ input[type=range]::-webkit-slider-thumb {
 }
 
 /* ════════════════
-   (채팅 UI 제거됨)
+   플로팅 AI 채팅 버튼
 ════════════════ */
+.chat-fab {
+    position: fixed;
+    bottom: calc(80px + env(safe-area-inset-bottom));
+    right: max(20px, calc((100vw - 390px) / 2 + 16px));
+    width: auto;
+    height: 52px;
+    padding: 0 16px 0 14px;
+    background: linear-gradient(135deg, #1A4F8A 0%, #3B8FE8 100%);
+    border-radius: 26px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    box-shadow: 0 6px 20px rgba(59,143,232,0.45);
+    z-index: 200;
+    transition: transform 0.2s, box-shadow 0.2s;
+    animation: fab-in 0.35s cubic-bezier(.34,1.56,.64,1) both;
+}
+.chat-fab:active { transform: scale(0.94); }
+@keyframes fab-in {
+    from { opacity:0; transform: translateY(16px) scale(0.85); }
+    to   { opacity:1; transform: none; }
+}
+
+.chat-fab-label {
+    color: white;
+    font-size: 13px;
+    font-weight: 700;
+    white-space: nowrap;
+    letter-spacing: -0.01em;
+    font-family: 'Pretendard', sans-serif;
+}
+
+.chat-fab-ping {
+    position: absolute;
+    top: -4px;
+    right: -4px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #4ADE80;
+    border: 2px solid white;
+    animation: ping 2s ease-in-out infinite;
+}
+@keyframes ping {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50%       { transform: scale(1.35); opacity: 0.6; }
+}

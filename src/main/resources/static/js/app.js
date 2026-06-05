@@ -414,12 +414,13 @@ function colorRes(c) {
 
 // ── 탭 전환 ──
 function switchTab(tab) {
-    document.getElementById('sc-app').classList.toggle('active', tab === 'home');
-    document.getElementById('sc-stats').classList.toggle('active', tab === 'stats');
-    document.getElementById('sc-settings').classList.toggle('active', tab === 'settings');
-    ['home','stats','settings'].forEach(t => {
-        [1,2,3].forEach(n => {
-            const suffix = n === 1 ? '' : String(n);
+    const screens = { home: 'sc-app', stats: 'sc-stats', settings: 'sc-settings', ai: 'sc-ai' };
+    Object.entries(screens).forEach(([t, id]) => {
+        const el = document.getElementById(id);
+        if (el) el.classList.toggle('active', t === tab);
+    });
+    ['home', 'stats', 'settings', 'ai'].forEach(t => {
+        ['', '2', '3', '4'].forEach(suffix => {
             const el = document.getElementById('nav-' + t + suffix);
             if (el) el.classList.toggle('active', t === tab);
         });
