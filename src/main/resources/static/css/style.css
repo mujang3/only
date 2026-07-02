@@ -979,3 +979,151 @@ input[type=range]::-webkit-slider-thumb {
     0%, 100% { transform: scale(1); opacity: 1; }
     50%       { transform: scale(1.35); opacity: 0.6; }
 }
+
+/* ════════════════
+   마이 에너지 복지 탭
+════════════════ */
+
+/* 1. 복지 카드 (신용카드형) */
+.wf-card {
+    position: relative; overflow: hidden;
+    background: linear-gradient(135deg, #1A4F8A 0%, #2E76C8 55%, #3B8FE8 100%);
+    border-radius: 20px; padding: 18px; margin-bottom: 14px;
+    color: white; box-shadow: 0 10px 26px rgba(26,79,138,0.32);
+}
+.wf-card-shine {
+    position: absolute; top: -60px; right: -40px;
+    width: 180px; height: 180px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(255,255,255,0.22), transparent 70%);
+    pointer-events: none;
+}
+.wf-card-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
+.wf-card-brand { font-size: 12px; font-weight: 700; letter-spacing: 0.02em; opacity: 0.95; }
+.wf-card-chip {
+    width: 34px; height: 24px; border-radius: 6px;
+    background: linear-gradient(135deg, #F7D774, #E0A93B);
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,0.4);
+}
+.wf-card-name { font-size: 22px; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 10px; }
+.wf-card-name span { font-size: 14px; font-weight: 500; opacity: 0.85; }
+.wf-card-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
+.wf-tag {
+    font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 20px;
+    background: rgba(255,255,255,0.18); backdrop-filter: blur(4px);
+}
+.wf-tag.alt { background: rgba(255,255,255,0.9); color: #1A4F8A; }
+.wf-tag.mul { background: rgba(247,215,116,0.95); color: #6B4A10; }
+.wf-card-status {
+    display: flex; align-items: center; gap: 10px;
+    background: rgba(255,255,255,0.14); border-radius: 14px; padding: 12px; margin-bottom: 12px;
+}
+.wf-status-dot {
+    width: 9px; height: 9px; border-radius: 50%; background: #4ADE80; flex-shrink: 0;
+    box-shadow: 0 0 0 4px rgba(74,222,128,0.25);
+}
+.wf-status-title { font-size: 13px; font-weight: 700; margin-bottom: 2px; }
+.wf-status-sub { font-size: 11px; opacity: 0.9; line-height: 1.5; }
+.wf-status-sub strong { font-weight: 800; }
+.wf-card-foot {
+    display: flex; justify-content: space-between; gap: 8px;
+    font-size: 10px; opacity: 0.8;
+    border-top: 1px solid rgba(255,255,255,0.18); padding-top: 10px;
+}
+
+/* 2. 챌린지 게이지 카드 */
+.wf-gauge-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--r); padding: 18px 16px; margin-bottom: 14px;
+    box-shadow: 0 2px 12px rgba(59,143,232,0.07);
+}
+.wf-gauge-wrap { position: relative; width: 220px; margin: 0 auto 6px; }
+.wf-gauge-svg { display: block; }
+.wf-gauge-center { position: absolute; left: 0; right: 0; bottom: 8px; text-align: center; }
+.wf-gauge-label { font-size: 11px; color: var(--text3); margin-bottom: 2px; }
+.wf-gauge-pct { font-size: 34px; font-weight: 800; color: var(--text); letter-spacing: -0.03em; line-height: 1; }
+.wf-gauge-down { font-size: 12px; font-weight: 700; color: var(--green); }
+.wf-gauge-legend, .wf-chart-legend {
+    display: flex; justify-content: center; gap: 14px; margin-bottom: 4px;
+}
+.wf-lg { display: inline-flex; align-items: center; gap: 5px; font-size: 10px; color: var(--text2); font-weight: 600; }
+.wf-lg i { width: 10px; height: 10px; border-radius: 3px; }
+.wf-predict {
+    display: flex; align-items: center; gap: 7px;
+    background: var(--green-pale); border: 1px solid #BBF7D0;
+    border-radius: var(--rs); padding: 10px 12px; margin: 12px 0;
+    font-size: 12px; font-weight: 600; color: #15803D; line-height: 1.4;
+}
+.wf-predict strong { font-weight: 800; }
+.wf-predict-icon { font-size: 15px; }
+.wf-chart-title { font-size: 12px; font-weight: 700; color: var(--text); margin: 4px 0 8px; }
+.wf-chart-cmp { font-size: 11px; font-weight: 500; color: var(--text3); }
+.wf-chart { background: var(--surface2); border-radius: var(--rs); padding: 10px 8px 6px; margin-bottom: 8px; }
+.wf-chart-axis { display: flex; justify-content: space-between; font-size: 9px; color: var(--text3); padding: 4px 2px 0; }
+
+/* 3. 퀘스트 카드 */
+.wf-quest-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--r); padding: 8px; margin-bottom: 12px;
+    box-shadow: 0 2px 12px rgba(59,143,232,0.07);
+}
+.wf-quest { display: flex; align-items: center; gap: 12px; padding: 12px 10px; border-radius: var(--rs); }
+.wf-quest.active { background: var(--warm-pale); }
+.wf-quest.lock { opacity: 0.6; }
+.wf-quest-mark {
+    width: 34px; height: 34px; border-radius: 50%; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 800;
+    background: var(--surface2);
+}
+.wf-quest.done .wf-quest-mark { background: var(--green); color: white; }
+.wf-quest.active .wf-quest-mark { background: #FFE3D3; }
+.wf-quest-info { flex: 1; }
+.wf-quest-title { font-size: 13px; font-weight: 700; color: var(--text); }
+.wf-quest-sub { font-size: 11px; color: var(--text2); margin-top: 2px; }
+.wf-quest-badge { font-size: 10px; font-weight: 700; padding: 4px 9px; border-radius: 20px; flex-shrink: 0; }
+.wf-quest-badge.done { background: var(--green-pale); color: #15803D; }
+.wf-quest-badge.active { background: var(--warm); color: white; }
+.wf-quest-badge.lock { background: var(--surface2); color: var(--text3); }
+
+/* 건강 보호 안전장치 배너 */
+.wf-safe-banner {
+    background: #FFFBEB; border: 1px solid #FDE68A;
+    border-radius: var(--r); padding: 14px; margin-bottom: 14px;
+}
+.wf-safe-head {
+    display: flex; justify-content: space-between; align-items: center; gap: 8px;
+    font-size: 12px; font-weight: 800; color: #92600A; margin-bottom: 7px;
+}
+.wf-safe-ok { font-size: 10px; font-weight: 700; color: #15803D; background: var(--green-pale); padding: 3px 8px; border-radius: 20px; }
+.wf-safe-body { font-size: 11px; color: #78560A; line-height: 1.6; }
+.wf-safe-body strong { font-weight: 800; }
+.wf-safe-body b { display: inline-block; margin-top: 4px; color: #92600A; }
+
+/* 4. 마일리지 사용처 */
+.wf-mileage-card {
+    background: linear-gradient(135deg, #16A34A 0%, #22C55E 100%);
+    border-radius: var(--r); padding: 18px; margin-bottom: 10px; color: white;
+    box-shadow: 0 8px 22px rgba(22,163,74,0.3);
+}
+.wf-mileage-label { font-size: 12px; opacity: 0.92; margin-bottom: 4px; }
+.wf-mileage-val { font-size: 32px; font-weight: 800; letter-spacing: -0.03em; margin-bottom: 14px; }
+.wf-mileage-val span { font-size: 16px; font-weight: 600; }
+.wf-settle-btn {
+    width: 100%; background: white; color: #15803D; border: none;
+    border-radius: var(--rs); padding: 13px; font-size: 14px; font-weight: 800;
+    font-family: inherit; cursor: pointer; transition: transform 0.1s;
+}
+.wf-settle-btn:active { transform: scale(0.98); }
+.wf-use-list {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--r); overflow: hidden; margin-bottom: 12px;
+    box-shadow: 0 2px 12px rgba(59,143,232,0.07);
+}
+.wf-use-item { display: flex; align-items: center; gap: 12px; padding: 14px 16px; cursor: pointer; }
+.wf-use-item + .wf-use-item { border-top: 1px solid var(--border); }
+.wf-use-item:active { background: var(--surface2); }
+.wf-use-icon { font-size: 22px; flex-shrink: 0; }
+.wf-use-txt { flex: 1; }
+.wf-use-title { font-size: 13px; font-weight: 700; color: var(--text); }
+.wf-use-pill { font-size: 9px; font-weight: 700; color: var(--accent); background: var(--accent-pale); padding: 2px 7px; border-radius: 20px; margin-left: 4px; }
+.wf-use-sub { font-size: 11px; color: var(--text2); margin-top: 2px; }
+.wf-use-arrow { font-size: 20px; color: var(--text3); flex-shrink: 0; }

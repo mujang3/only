@@ -414,17 +414,47 @@ function colorRes(c) {
 
 // ── 탭 전환 ──
 function switchTab(tab) {
-    const screens = { home: 'sc-app', stats: 'sc-stats', settings: 'sc-settings', ai: 'sc-ai' };
+    const screens = { home: 'sc-app', stats: 'sc-stats', settings: 'sc-settings', ai: 'sc-ai', welfare: 'sc-welfare' };
     Object.entries(screens).forEach(([t, id]) => {
         const el = document.getElementById(id);
         if (el) el.classList.toggle('active', t === tab);
     });
-    ['home', 'stats', 'settings', 'ai'].forEach(t => {
-        ['', '2', '3', '4'].forEach(suffix => {
+    ['home', 'stats', 'settings', 'ai', 'welfare'].forEach(t => {
+        ['', '2', '3', '4', '5'].forEach(suffix => {
             const el = document.getElementById('nav-' + t + suffix);
             if (el) el.classList.toggle('active', t === tab);
         });
     });
+    if (tab === 'welfare') animateWelfareGauge();
+}
+
+// ── 마이 에너지 복지: 절감률 게이지 애니메이션 ──
+const WF_SAVE_RATE = 18.5;   // 전년 동월 대비 가스 절감률(%)
+const WF_GAUGE_MAX = 30;     // 게이지 만점 기준(%)
+let wfGaugeDone = false;
+function animateWelfareGauge() {
+    if (wfGaugeDone) return;
+    const arc = document.getElementById('wf-gauge-arc');
+    const valEl = document.getElementById('wf-gauge-val');
+    if (!arc || !valEl) return;
+    wfGaugeDone = true;
+
+    // 절감률 구간별 색상: 10% 미만 회색 → 10%↑ 연두 → 20%↑ 오렌지
+    const color = WF_SAVE_RATE >= 20 ? '#F97316' : WF_SAVE_RATE >= 10 ? '#84CC16' : '#B8C4CE';
+    arc.setAttribute('stroke', color);
+
+    const LEN = 283;   // 반원 호 길이(π·90)
+    const frac = Math.min(WF_SAVE_RATE / WF_GAUGE_MAX, 1);
+    const start = performance.now();
+    const dur = 900;
+    function step(now) {
+        const p = Math.min((now - start) / dur, 1);
+        const ease = 1 - Math.pow(1 - p, 3);
+        arc.setAttribute('stroke-dashoffset', LEN * (1 - frac * ease));
+        valEl.textContent = (WF_SAVE_RATE * ease).toFixed(1);
+        if (p < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
 }
 
 

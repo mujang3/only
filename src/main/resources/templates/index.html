@@ -195,6 +195,7 @@
         <div class="bottom-nav">
             <button class="nav-btn active" id="nav-home" onclick="switchTab('home')"><div class="nav-icon">🏠</div>홈</button>
             <button class="nav-btn" id="nav-stats" onclick="switchTab('stats')"><div class="nav-icon">📊</div>통계</button>
+            <button class="nav-btn" id="nav-welfare" onclick="switchTab('welfare')"><div class="nav-icon">🎁</div>복지</button>
             <button class="nav-btn" id="nav-settings" onclick="switchTab('settings')"><div class="nav-icon">⚙️</div>설정</button>
             <button class="nav-btn" id="nav-ai" onclick="switchTab('ai')"><div class="nav-icon">🤖</div>AI 상담</button>
         </div>
@@ -359,6 +360,7 @@
         <div class="bottom-nav">
             <button class="nav-btn" id="nav-home2" onclick="switchTab('home')"><div class="nav-icon">🏠</div>홈</button>
             <button class="nav-btn active" id="nav-stats2" onclick="switchTab('stats')"><div class="nav-icon">📊</div>통계</button>
+            <button class="nav-btn" id="nav-welfare2" onclick="switchTab('welfare')"><div class="nav-icon">🎁</div>복지</button>
             <button class="nav-btn" id="nav-settings2" onclick="switchTab('settings')"><div class="nav-icon">⚙️</div>설정</button>
             <button class="nav-btn" id="nav-ai2" onclick="switchTab('ai')"><div class="nav-icon">🤖</div>AI 상담</button>
         </div>
@@ -631,6 +633,7 @@
         <div class="bottom-nav">
             <button class="nav-btn" id="nav-home3" onclick="switchTab('home')"><div class="nav-icon">🏠</div>홈</button>
             <button class="nav-btn" id="nav-stats3" onclick="switchTab('stats')"><div class="nav-icon">📊</div>통계</button>
+            <button class="nav-btn" id="nav-welfare3" onclick="switchTab('welfare')"><div class="nav-icon">🎁</div>복지</button>
             <button class="nav-btn active" id="nav-settings3" onclick="switchTab('settings')"><div class="nav-icon">⚙️</div>설정</button>
             <button class="nav-btn" id="nav-ai3" onclick="switchTab('ai')"><div class="nav-icon">🤖</div>AI 상담</button>
         </div>
@@ -707,8 +710,171 @@
         <div class="bottom-nav">
             <button class="nav-btn" id="nav-home4" onclick="switchTab('home')"><div class="nav-icon">🏠</div>홈</button>
             <button class="nav-btn" id="nav-stats4" onclick="switchTab('stats')"><div class="nav-icon">📊</div>통계</button>
+            <button class="nav-btn" id="nav-welfare4" onclick="switchTab('welfare')"><div class="nav-icon">🎁</div>복지</button>
             <button class="nav-btn" id="nav-settings4" onclick="switchTab('settings')"><div class="nav-icon">⚙️</div>설정</button>
             <button class="nav-btn active" id="nav-ai4" onclick="switchTab('ai')"><div class="nav-icon">🤖</div>AI 상담</button>
+        </div>
+    </div>
+
+    <!-- ════ 마이 에너지 복지 화면 ════ -->
+    <div class="screen" id="sc-welfare">
+        <div class="topbar">
+            <div class="topbar-logo"><em>온리</em> : ONLY</div>
+            <div class="topbar-badge">마이 에너지 복지</div>
+        </div>
+        <div class="app-body">
+
+            <!-- 1. 사용자 맞춤 복지 카드 -->
+            <div class="section-label">내 복지 카드</div>
+            <div class="wf-card">
+                <div class="wf-card-shine"></div>
+                <div class="wf-card-top">
+                    <div class="wf-card-brand">🎁 My Energy Welfare</div>
+                    <div class="wf-card-chip"></div>
+                </div>
+                <div class="wf-card-name">홍길동 <span>님</span></div>
+                <div class="wf-card-tags">
+                    <span class="wf-tag">일반 청년</span>
+                    <span class="wf-tag alt">2구간 대상자</span>
+                    <span class="wf-tag mul">마일리지 ×1.0</span>
+                </div>
+                <div class="wf-card-status">
+                    <div class="wf-status-dot"></div>
+                    <div>
+                        <div class="wf-status-title">2구간 혜택 적용 완료</div>
+                        <div class="wf-status-sub">50% 캐시백 <strong>25,000원</strong> 지급 완료 · 실질 자부담 25,000원</div>
+                    </div>
+                </div>
+                <div class="wf-card-foot">
+                    <span>온리봇 보급 상태 · 정부24 연동 완료</span>
+                    <span>다음 신분 확인 · 2026.12.31</span>
+                </div>
+            </div>
+
+            <!-- 2. 이번 달 에너지 챌린지 현황 -->
+            <div class="section-label">이번 달 에너지 챌린지</div>
+            <div class="wf-gauge-card">
+                <div class="wf-gauge-wrap">
+                    <svg viewBox="0 0 220 130" width="220" height="130" class="wf-gauge-svg">
+                        <path d="M20,120 A90,90 0 0 1 200,120" fill="none" stroke="#E5EEF6" stroke-width="18" stroke-linecap="round"/>
+                        <path id="wf-gauge-arc" d="M20,120 A90,90 0 0 1 200,120" fill="none" stroke="#84CC16" stroke-width="18" stroke-linecap="round" stroke-dasharray="283" stroke-dashoffset="283"/>
+                    </svg>
+                    <div class="wf-gauge-center">
+                        <div class="wf-gauge-label">전년 동월 대비</div>
+                        <div class="wf-gauge-pct"><span id="wf-gauge-val">0</span>%<span class="wf-gauge-down"> 절감중</span></div>
+                    </div>
+                </div>
+                <div class="wf-gauge-legend">
+                    <span class="wf-lg"><i style="background:#B8C4CE"></i>10% 미만</span>
+                    <span class="wf-lg"><i style="background:#84CC16"></i>10%↑</span>
+                    <span class="wf-lg"><i style="background:#F97316"></i>20%↑</span>
+                </div>
+                <div class="wf-predict">
+                    <span class="wf-predict-icon">✨</span>
+                    이 페이스를 유지하면 다음 달 <strong>10,000P</strong> 적립 예정!
+                </div>
+
+                <!-- 일별 가스 사용량 추이 -->
+                <div class="wf-chart-title">이번 달 일별 가스 사용량 <span class="wf-chart-cmp">— 작년 동월 대비</span></div>
+                <div class="wf-chart">
+                    <svg viewBox="0 0 300 120" width="100%" height="120" preserveAspectRatio="none">
+                        <polyline fill="none" stroke="#B8C4CE" stroke-width="2.5" stroke-dasharray="4 3"
+                                  points="0,40 50,44 100,38 150,48 200,42 250,50 300,46"/>
+                        <polyline fill="none" stroke="#3B8FE8" stroke-width="3"
+                                  points="0,60 50,66 100,72 150,78 200,84 250,92 300,96"/>
+                    </svg>
+                    <div class="wf-chart-axis"><span>1일</span><span>10일</span><span>20일</span><span>오늘</span></div>
+                </div>
+                <div class="wf-chart-legend">
+                    <span class="wf-lg"><i style="background:#B8C4CE"></i>작년 동월</span>
+                    <span class="wf-lg"><i style="background:#3B8FE8"></i>올해</span>
+                </div>
+            </div>
+
+            <!-- 3. 에코 마일리지 보상 테이블 & 안전장치 -->
+            <div class="section-label">에코 마일리지 퀘스트</div>
+            <div class="wf-quest-card">
+                <div class="wf-quest done">
+                    <div class="wf-quest-mark">✓</div>
+                    <div class="wf-quest-info">
+                        <div class="wf-quest-title">10% 절감 달성</div>
+                        <div class="wf-quest-sub">기본 5,000P 적립 완료</div>
+                    </div>
+                    <div class="wf-quest-badge done">달성</div>
+                </div>
+                <div class="wf-quest active">
+                    <div class="wf-quest-mark">🔥</div>
+                    <div class="wf-quest-info">
+                        <div class="wf-quest-title">15% 절감 도전 중</div>
+                        <div class="wf-quest-sub">기본 10,000P 적립 · 현재 18.5% 근접!</div>
+                    </div>
+                    <div class="wf-quest-badge active">진행 중</div>
+                </div>
+                <div class="wf-quest lock">
+                    <div class="wf-quest-mark">🔒</div>
+                    <div class="wf-quest-info">
+                        <div class="wf-quest-title">20% 절감 목표</div>
+                        <div class="wf-quest-sub">기본 15,000P 적립 · 잠금</div>
+                    </div>
+                    <div class="wf-quest-badge lock">잠금</div>
+                </div>
+            </div>
+
+            <!-- 건강 보호 안전장치 배너 -->
+            <div class="wf-safe-banner">
+                <div class="wf-safe-head">
+                    <span>🛡️ 건강 보호 안전장치</span>
+                    <span class="wf-safe-ok">현재 자취방 20.5°C · 안전</span>
+                </div>
+                <div class="wf-safe-body">
+                    실내 온도가 <strong>18°C 이하</strong>로 3일 이상 연속 감지되면
+                    건강 보호를 위해 해당 기간 마일리지 적립이 자동 중지돼요.
+                    <b>따뜻하고 건강하게 아끼세요!</b>
+                </div>
+            </div>
+
+            <!-- 4. 마일리지 사용처 & 환급 -->
+            <div class="section-label">내 마일리지</div>
+            <div class="wf-mileage-card">
+                <div class="wf-mileage-label">현재 보유 에코 마일리지</div>
+                <div class="wf-mileage-val">24,500 <span>원</span></div>
+                <button class="wf-settle-btn">마일리지 정산하기</button>
+            </div>
+
+            <div class="wf-use-list">
+                <div class="wf-use-item">
+                    <span class="wf-use-icon">🔥</span>
+                    <div class="wf-use-txt">
+                        <div class="wf-use-title">도시가스 요금 차감 신청</div>
+                        <div class="wf-use-sub">다음 달 고지서에서 즉시 차감</div>
+                    </div>
+                    <span class="wf-use-arrow">›</span>
+                </div>
+                <div class="wf-use-item">
+                    <span class="wf-use-icon">💸</span>
+                    <div class="wf-use-txt">
+                        <div class="wf-use-title">현금 캐시백 출금</div>
+                        <div class="wf-use-sub">등록된 청년 계좌로 직접 송금</div>
+                    </div>
+                    <span class="wf-use-arrow">›</span>
+                </div>
+                <div class="wf-use-item">
+                    <span class="wf-use-icon">🎓</span>
+                    <div class="wf-use-txt">
+                        <div class="wf-use-title">캠퍼스 마일리지 전환 <span class="wf-use-pill">대학생 전용</span></div>
+                        <div class="wf-use-sub">교내 서점 · 셔틀 · 식당 연동</div>
+                    </div>
+                    <span class="wf-use-arrow">›</span>
+                </div>
+            </div>
+
+        </div>
+        <div class="bottom-nav">
+            <button class="nav-btn" id="nav-home5" onclick="switchTab('home')"><div class="nav-icon">🏠</div>홈</button>
+            <button class="nav-btn" id="nav-stats5" onclick="switchTab('stats')"><div class="nav-icon">📊</div>통계</button>
+            <button class="nav-btn active" id="nav-welfare5" onclick="switchTab('welfare')"><div class="nav-icon">🎁</div>복지</button>
+            <button class="nav-btn" id="nav-settings5" onclick="switchTab('settings')"><div class="nav-icon">⚙️</div>설정</button>
+            <button class="nav-btn" id="nav-ai5" onclick="switchTab('ai')"><div class="nav-icon">🤖</div>AI 상담</button>
         </div>
     </div>
 </div>
